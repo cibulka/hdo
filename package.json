@@ -1,12 +1,18 @@
 {
-  "name": "--latest",
+  "name": "hdo",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "parse-pre": "node scripts/parse/pre.ts",
+    "parse-egd": "node scripts/parse/egd.ts",
+    "parse-cez": "node scripts/parse/cez.ts",
+    "test": "node --test",
+    "prepare": "git config core.hooksPath .githooks || true"
   },
   "dependencies": {
     "next": "16.4.5",
@@ -21,6 +27,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.4.5",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
   }
 }

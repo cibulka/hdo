@@ -1,0 +1,17 @@
+#!/bin/sh
+# Regenerates output/<distributor>.json whenever files in input/<distributor>/ are staged,
+# and stages the result so input and output always land in the same commit.
+# A failing parser (including "not developed yet") aborts the commit.
+set -e
+
+distributors=$(git diff --cached --name-only -- input/ | grep -v '/\.gitkeep$' | cut -d/ -f2 | sort -u)
+
+for d in $distributors; do
+  [ -d "input/$d" ] || continue # e.g. input/README.md
+  echo "pre-commit: input/$d/ changed → npm run parse-$d"
+  if ! npm run --silent "parse-$d"; then
+    echo "pre-commit: parse-$d failed, commit aborted." >&2
+    exit 1
+  fi
+  git add "output/$d.json"
+done

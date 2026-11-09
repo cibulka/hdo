@@ -1,6 +1,6 @@
 # HDO – build plan
 
-> Status: **approved 2026-11-09**. Phase 1 done (parser rules below). Next: phase 2.
+> Status: **approved 2026-11-09**. Phases 1–2 done. Next: phase 3 (time logic).
 
 ## Goal
 
@@ -142,37 +142,14 @@ npm run parse-cez    # exits 1: "ČEZ Distribuce parser is not developed yet"
 
 Download the files into `input/pre/` → `git commit` (the hook regenerates `output/pre.json`) → `git push` → Vercel deploys.
 
-### Output schema (draft, finalised in phase 1)
+### Output schema (final – `lib/hdo/schema.ts`)
 
-```ts
-type Day = 'mon'|'tue'|'wed'|'thu'|'fri'|'sat'|'sun'|'hol';
-type Windows = [start: number, end: number][];   // minutes from midnight, Prague local time
+`DistributorData` → `periods[]` (`validFrom`, `validTo`) → `tariffs[]` (`code`: "D57d") → `programs[]` (`command`: "573", `label`) → `variants[]`.
 
-type Variant = {
-  device: 'hdo' | 'tou-a' | 'tou-t' | 'amm';   // PRE's set. Device types, program numbers and their count
-                                              // are distributor-specific; only tariff codes (D57d, …) are national (ERÚ).
-  id: string;              // "573" / "AD57_001" / "TD57_001" / "1052"
-  aliases: string[];       // "A4B6DP9", "AD3 573 574 575", ...
-  week: Record<Day, Windows>;   // NT windows
-};
-
-type Program = {
-  tariff: string;          // "D57d"
-  command: string;         // "573" – the shared key across device variants
-  label: string;           // PRE description
-  variants: Variant[];
-};
-
-type DistributorData = {
-  distributor: 'pre';
-  periods: {               // usually 1; 2 when a following program exists
-    validFrom: string;     // "YYYY-MM-DD"
-    validTo: string | null;
-    programs: Program[];
-  }[];
-  sources: string[];
-};
-```
+- Each variant has `device` (`hdo` / `tou-a` / `tou-t` / `amm`), `id`, `name`, `week` (NT windows per `mon…sun, hol`) and `issues`.
+- `issues` is non-empty when the distributor's data is ambiguous, e.g. one printed AMM name mapping to two schedules. **The app shows an error instead of a status for such a variant.**
+- TOU/AMM tables have no validity of their own, so they are included in every period. Periods come from the HDO program files.
+- An HDO command for "C/D 25d_26d" is listed under each tariff it names.
 
 ## 3. Time logic (`lib/schedule.ts`, pure functions)
 
