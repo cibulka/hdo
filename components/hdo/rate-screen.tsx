@@ -46,7 +46,7 @@ export function RateScreen({ onLocaleChange }: { onLocaleChange: (locale: Locale
       <main
         className={cn(
           "relative grid min-h-dvh grid-rows-[1fr_2fr]",
-          "px-4 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))]",
+          "px-4 pt-[max(1rem,env(safe-area-inset-top))] pb-24",
           "text-white",
         )}
       >
@@ -61,10 +61,12 @@ export function RateScreen({ onLocaleChange }: { onLocaleChange: (locale: Locale
 
         <section className={cn("relative flex flex-col items-center justify-center", "pb-8", "text-center")}>
           <Status state={state} now={now} />
-          <footer className={cn("absolute inset-x-0 bottom-0")}>
-            <ValidityNote data={data} />
-          </footer>
         </section>
+
+        <footer className={cn("absolute inset-x-0 bottom-0 flex flex-col items-center gap-3")}>
+          <ValidityNote data={data} />
+          <MadeBy />
+        </footer>
       </main>
     </>
   );
@@ -135,6 +137,28 @@ function Message({ title, children }: { title?: string; children: React.ReactNod
       {title && <h1 className={cn("text-2xl font-bold")}>{title}</h1>}
       <div className={cn("text-base", "text-white/90")}>{children}</div>
     </div>
+  );
+}
+
+/** Credit tab glued to the bottom edge. */
+function MadeBy() {
+  return (
+    <p
+      className={cn(
+        "rounded-t-xl bg-black px-4 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))]",
+        "text-xs text-white/80",
+      )}
+    >
+      Made by{" "}
+      <a
+        href="https://cibulka.codes"
+        target="_blank"
+        rel="noopener"
+        className={cn("font-medium text-white underline underline-offset-2", "hover:text-white/80 focus-visible:outline-2 focus-visible:outline-white")}
+      >
+        cibulka.codes
+      </a>
+    </p>
   );
 }
 
