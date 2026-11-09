@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
-import { completeSelection, deviceOptions, draftForProgram, draftForTariff, programOptions } from "./options.ts";
+import { completeSelection, DEFAULT_SELECTION, deviceOptions, draftForProgram, draftForTariff, programOptions } from "./options.ts";
 import type { DistributorData } from "./schema.ts";
 
 const pre: DistributorData = JSON.parse(readFileSync(new URL("../../output/pre.json", import.meta.url), "utf8"));
@@ -40,4 +40,8 @@ test("ambiguous AMM variants are marked", () => {
   const amm = deviceOptions(period, "D56d", "517").filter((o) => o.device === "amm");
   assert.equal(amm.length, 2);
   assert.ok(amm.every((o) => o.ambiguous && o.hasIssues));
+});
+
+test("the default selection exists in the data", () => {
+  assert.ok(completeSelection(period, DEFAULT_SELECTION));
 });

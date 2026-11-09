@@ -11,6 +11,19 @@ export interface DraftSelection {
   variantId?: string;
 }
 
+/**
+ * Shown until the user picks their own (not saved). D25d is the most widespread two-rate household
+ * tariff and the HDO receiver the most common device; PRE publishes no usage per program, so the
+ * program is simply the first one listed.
+ */
+export const DEFAULT_SELECTION: DraftSelection = {
+  distributor: "pre",
+  tariff: "D25d",
+  command: "490",
+  device: "hdo",
+  variantId: "490",
+};
+
 export interface ProgramOption {
   command: string;
   /** HDO receiver address (e.g. "A4B6DP9"), the label most people can find on their device. */

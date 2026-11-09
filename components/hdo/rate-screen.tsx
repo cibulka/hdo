@@ -4,7 +4,7 @@ import { useFormatter, useTranslations } from "next-intl";
 import { useStored } from "@/hooks/use-stored";
 import { useNow } from "@/hooks/use-now";
 import { DATA, DISTRIBUTORS } from "@/lib/hdo/data";
-import { completeSelection, type DraftSelection } from "@/lib/hdo/options";
+import { completeSelection, DEFAULT_SELECTION, type DraftSelection } from "@/lib/hdo/options";
 import { isoDate, pragueDate } from "@/lib/hdo/prague";
 import { getRateState, isStale, periodFor, type RateState } from "@/lib/hdo/schedule";
 import type { DistributorData } from "@/lib/hdo/schema";
@@ -26,7 +26,7 @@ function parseDraft(raw: string | null | undefined): DraftSelection {
   } catch {
     // corrupted storage → start over
   }
-  return { distributor: "pre" };
+  return DEFAULT_SELECTION;
 }
 
 export function RateScreen({ onLocaleChange }: { onLocaleChange: (locale: Locale) => void }) {
