@@ -61,12 +61,10 @@
     "title": "Next 24 hours",
     "description": "When the low and high rates apply.",
     "low": "low",
-    "high": "high",
-    "close": "Close"
+    "high": "high"
   },
   "about": {
     "button": "What is this?",
-    "title": "What is this?",
-    "close": "Close"
+    "title": "What is this?"
   }
 }

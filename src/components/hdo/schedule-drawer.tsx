@@ -6,7 +6,6 @@ import type { DistributorData } from "@/lib/hdo/schema";
 import { hourTicks, timeline, type Segment } from "@/lib/hdo/timeline";
 import { cn } from "@/lib/utils";
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../ui/drawer";
-import { DrawerCloseButton } from "./drawer-close-button";
 
 const HOURS = 24;
 const RATE_BG = { low: "bg-emerald-600", high: "bg-red-700" } as const;
@@ -28,7 +27,6 @@ export function ScheduleDrawer({ data, selection, now }: { data: DistributorData
         {t("button")}
       </DrawerTrigger>
       <DrawerContent className={cn("mx-auto w-full max-w-xl")}>
-        <DrawerCloseButton label={t("close")} />
         <div className={cn("overflow-y-auto", "px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))]")}>
           <DrawerHeader className={cn("px-0")}>
             <DrawerTitle>{t("title")}</DrawerTitle>

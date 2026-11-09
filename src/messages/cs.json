@@ -61,12 +61,10 @@
     "title": "Příštích 24 hodin",
     "description": "Kdy platí nízký a kdy vysoký tarif.",
     "low": "nízký",
-    "high": "vysoký",
-    "close": "Zavřít"
+    "high": "vysoký"
   },
   "about": {
     "button": "Co to je?",
-    "title": "Co to je?",
-    "close": "Zavřít"
+    "title": "Co to je?"
   }
 }

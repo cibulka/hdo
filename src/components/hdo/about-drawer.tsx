@@ -3,7 +3,6 @@
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from "../ui/drawer";
-import { DrawerCloseButton } from "./drawer-close-button";
 
 /** "What is this?" button opening the README (user part, rendered at build time) in a bottom drawer. */
 export function AboutDrawer({ html, triggerClassName }: { html: string; triggerClassName?: string }) {
@@ -13,7 +12,6 @@ export function AboutDrawer({ html, triggerClassName }: { html: string; triggerC
     <Drawer>
       <DrawerTrigger className={cn("cursor-pointer underline underline-offset-2", triggerClassName)}>{t("button")}</DrawerTrigger>
       <DrawerContent className={cn("mx-auto w-full max-w-xl", "data-[vaul-drawer-direction=bottom]:max-h-[90dvh]")}>
-        <DrawerCloseButton label={t("close")} />
         <DrawerTitle className={cn("sr-only")}>{t("title")}</DrawerTitle>
         <div className={cn("overflow-y-auto", "px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))]")}>
           <article
