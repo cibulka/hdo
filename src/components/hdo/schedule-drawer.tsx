@@ -57,7 +57,7 @@ function Timeline({ segments, from, now }: { segments: Segment[]; from: number; 
       <div>
         {/* SVG with crispEdges: HTML blocks at fractional pixel positions get blended (red+green) edge
             columns that look like outlines; crisp SVG rects snap every boundary to a whole pixel. */}
-        <div className={cn("relative h-10 overflow-hidden", "rounded-lg outline-1 outline-black/20 dark:outline-white/25")}>
+        <div className={cn("relative h-10 overflow-hidden", "rounded-lg outline-2 outline-black/35 dark:outline-white/40")}>
           <svg
             aria-hidden
             className={cn("absolute inset-0 size-full")}
