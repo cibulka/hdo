@@ -12,7 +12,7 @@
     "days": "{count} д"
   },
   "selection": {
-    "sentence": "Я в сети <distributor>,</distributor> тариф <tariff>.</tariff> У меня программа <program></program> и <device>.</device>",
+    "sentence": "Я в сети <distributor>,</distributor> <tariff>.</tariff> У меня <program></program> и <device>.</device>",
     "search": "Поиск…",
     "empty": "Ничего не найдено",
     "unsupported": "пока не поддерживается",
@@ -20,9 +20,19 @@
     "hours": "{hours} ч в день",
     "hint": "Тариф указан в договоре или счёте. Программа — на этикетке приёмника HDO; для счётчика без приёмника уточните у дистрибьютора.",
     "dataIssue": "неясные данные",
-    "choose": "выберите",
     "hintLabel": "Где это найти?",
-    "devicePrinted": "обозначение: {printed}"
+    "devicePrinted": "обозначение: {printed}",
+    "tariffToken": {
+      "empty": "тариф",
+      "value": "тариф {code}"
+    },
+    "programToken": {
+      "empty": "программа",
+      "value": "программа {command}"
+    },
+    "deviceToken": {
+      "empty": "счётчик"
+    }
   },
   "device": {
     "hdo": "Приёмник HDO",
@@ -45,5 +55,8 @@
     "tou-a": "счётчик с таймером (A)",
     "tou-t": "счётчик с таймером (T)",
     "amm": "умный счётчик"
+  },
+  "placeholder": {
+    "alphabet": "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЫЭЮЯ"
   }
 }

@@ -12,7 +12,7 @@
     "days": "{count} d"
   },
   "selection": {
-    "sentence": "Jsem v síti <distributor></distributor> se sazbou <tariff>.</tariff> Mám program <program></program> a <device>.</device>",
+    "sentence": "Jsem v síti <distributor></distributor> se <tariff>.</tariff> Mám <program></program> a <device>.</device>",
     "search": "Hledat…",
     "empty": "Nic nenalezeno",
     "unsupported": "zatím nepodporováno",
@@ -20,9 +20,19 @@
     "hours": "{hours} h denně",
     "hint": "Sazbu najdete ve smlouvě nebo na faktuře. Program je na štítku HDO přijímače; u elektroměru bez přijímače ho zjistíte u distributora.",
     "dataIssue": "nejasná data",
-    "choose": "vyberte",
     "hintLabel": "Kde to najdu?",
-    "devicePrinted": "na zařízení: {printed}"
+    "devicePrinted": "na zařízení: {printed}",
+    "tariffToken": {
+      "empty": "sazbou",
+      "value": "sazbou {code}"
+    },
+    "programToken": {
+      "empty": "program",
+      "value": "program {command}"
+    },
+    "deviceToken": {
+      "empty": "elektroměr"
+    }
   },
   "device": {
     "hdo": "HDO přijímač",
@@ -45,5 +55,8 @@
     "tou-a": "elektroměr se spínacími hodinami (A)",
     "tou-t": "elektroměr se spínacími hodinami (T)",
     "amm": "chytrý elektroměr"
+  },
+  "placeholder": {
+    "alphabet": "AÁBCČDĎEÉĚFGHIÍJKLMNŇOÓPRŘSŠTŤUÚŮVYÝZŽ"
   }
 }

@@ -54,7 +54,7 @@ export function TokenCombobox({
 }: TokenComboboxProps) {
   const [open, setOpen] = useState(false);
 
-  if (!interactive) return <span className={cn("font-semibold", isPlaceholder && "text-white/50 italic")}>{text}</span>;
+  if (!interactive) return <span className={cn(isPlaceholder ? "text-white/55" : "font-semibold")}>{text}</span>;
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -65,7 +65,7 @@ export function TokenCombobox({
             "inline",
             "border-b-2 border-dashed",
             "font-semibold",
-            isPlaceholder ? "border-white text-white/70 italic" : "border-white/50 text-white",
+            isPlaceholder ? "border-white text-white" : "border-white/50 text-white",
             "cursor-pointer outline-none hover:border-white focus-visible:border-white focus-visible:bg-white/15",
             isPlaceholder && "animate-pulse",
             "transition-colors",

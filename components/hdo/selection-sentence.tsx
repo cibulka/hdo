@@ -89,7 +89,7 @@ export function SelectionSentence({ period, draft, onChange, className }: Select
           <NoWrap trailing={punctuation}>
             <TokenCombobox
               {...common}
-              text={draft.tariff ?? t("choose")}
+              text={draft.tariff ? t("tariffToken.value", { code: draft.tariff }) : t("tariffToken.empty")}
               isPlaceholder={!draft.tariff}
               value={draft.tariff}
               groups={tariffGroups}
@@ -101,7 +101,7 @@ export function SelectionSentence({ period, draft, onChange, className }: Select
           <NoWrap trailing={punctuation}>
             <TokenCombobox
               {...common}
-              text={draft.command ?? t("choose")}
+              text={draft.command ? t("programToken.value", { command: draft.command }) : t("programToken.empty")}
               isPlaceholder={!draft.command}
               interactive={programs.length > 1}
               value={draft.command}
@@ -124,7 +124,7 @@ export function SelectionSentence({ period, draft, onChange, className }: Select
           >
             <TokenCombobox
               {...common}
-              text={selectedDevice ? tDeviceSentence(selectedDevice.device) : t("choose")}
+              text={selectedDevice ? tDeviceSentence(selectedDevice.device) : t("deviceToken.empty")}
               isPlaceholder={!selectedDevice}
               interactive={devices.length > 1}
               value={selectedDeviceKey}

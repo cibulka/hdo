@@ -12,7 +12,7 @@
     "days": "{count} d"
   },
   "selection": {
-    "sentence": "I’m on the <distributor></distributor> grid with tariff <tariff>.</tariff> I have program <program></program> and <device>.</device>",
+    "sentence": "I’m on the <distributor></distributor> grid with <tariff>.</tariff> I have <program></program> and <device>.</device>",
     "search": "Search…",
     "empty": "Nothing found",
     "unsupported": "not supported yet",
@@ -20,9 +20,19 @@
     "hours": "{hours} h a day",
     "hint": "Your tariff is on your contract or invoice. The program is on the HDO receiver label; for a meter without a receiver, ask your distributor.",
     "dataIssue": "unclear data",
-    "choose": "choose",
     "hintLabel": "Where do I find this?",
-    "devicePrinted": "printed as: {printed}"
+    "devicePrinted": "printed as: {printed}",
+    "tariffToken": {
+      "empty": "a tariff",
+      "value": "tariff {code}"
+    },
+    "programToken": {
+      "empty": "a program",
+      "value": "program {command}"
+    },
+    "deviceToken": {
+      "empty": "a meter"
+    }
   },
   "device": {
     "hdo": "HDO receiver",
@@ -45,5 +55,8 @@
     "tou-a": "a meter with a time switch (A)",
     "tou-t": "a meter with a time switch (T)",
     "amm": "a smart meter"
+  },
+  "placeholder": {
+    "alphabet": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
   }
 }

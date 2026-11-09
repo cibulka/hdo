@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils";
 import { Countdown } from "./countdown";
 import { LanguageSwitch } from "./language-switch";
 import { RateBackground } from "./rate-background";
+import { Scramble } from "./scramble";
 import { SelectionSentence } from "./selection-sentence";
 
 export const SELECTION_KEY = "hdo.selection.v1";
@@ -106,22 +107,25 @@ function Status({ state, now }: { state: RateState | null; now: number | null })
     <div key={rate ?? "none"} className={cn("flex flex-col items-center gap-2", rate && "animate-in fade-in slide-in-from-bottom-6 zoom-in-95 duration-700")}>
       <p className={cn("text-sm font-medium uppercase tracking-[0.3em]", "opacity-80")}>{t("status.now")}</p>
       <h1
-        // Font size scales with the word length so long words (ВЫСОКИЙ) fit narrow screens.
-        style={{ "--chars": rate ? t(`rate.${rate}`).length : 3 } as React.CSSProperties}
+        // Font size scales with the word length so long words (ВЫСОКИЙ) fit narrow screens; short ones (LOW) are capped.
+        style={{ "--chars": t(`rate.${rate ?? "low"}`).length } as React.CSSProperties}
         className={cn(
-          "text-[min(10rem,calc((100vw-2rem)/(var(--chars)*0.75)))] leading-none font-black tracking-tight",
+          "text-[min(10rem,calc((100vw-2rem)/(max(var(--chars),5)*0.75)))] leading-none font-black tracking-tight",
           "drop-shadow-[0_4px_24px_rgb(0_0_0/0.25)]",
-          !rate && "opacity-30",
+          !rate && "opacity-35",
         )}
       >
-        {rate ? t(`rate.${rate}`) : "—"}
+        {rate ? t(`rate.${rate}`) : <Scramble alphabet={t("placeholder.alphabet")} pattern={"#".repeat(t("rate.low").length)} />}
       </h1>
       <p className={cn("mt-4 text-sm uppercase tracking-[0.2em]", "opacity-80")}>{t("status.remaining")}</p>
       {until !== null && now !== null ? (
         <Countdown ms={until - now} className={cn("text-[clamp(2.5rem,12vw,5rem)] leading-none")} />
       ) : (
-        <span className={cn("text-[clamp(2.5rem,12vw,5rem)] leading-none font-semibold", "opacity-30")}>
-          –:––<span className={cn("text-[0.55em]")}>:––</span>
+        <span className={cn("text-[clamp(2.5rem,12vw,5rem)] leading-none font-semibold tracking-tight tabular-nums", "opacity-35")}>
+          <Scramble alphabet="0123456789" pattern="#:%#" />
+          <span className={cn("text-[0.55em]")}>
+            <Scramble alphabet="0123456789" pattern=":%#" />
+          </span>
         </span>
       )}
       <p className={cn("mt-1 text-base", "opacity-85")}>{untilText}</p>
