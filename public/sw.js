@@ -4,8 +4,12 @@
 // - /_next/static: cache first (file names are content-hashed, so they never change)
 // - everything else same-origin (icons, manifest): stale-while-revalidate
 
-const CACHE = "hdo-v1";
-const PRECACHE = ["/", "/manifest.webmanifest", "/icons/icon-192.png", "/icons/icon-512.png"];
+const CACHE = "hdo-v3";
+// "/" is redirected by the server to a language URL, so the language pages are what gets cached.
+// (Caching "/" itself would store a redirected response, which browsers refuse for navigations.)
+const LOCALE_PAGES = ["/cs", "/en", "/ru"];
+const PRECACHE = [...LOCALE_PAGES, "/manifest.webmanifest", "/icons/icon-192.png", "/icons/icon-512.png"];
+const LAST_PAGE = "/__last-page"; // remembers the last language page, to open it offline from "/"
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(PRECACHE)));
@@ -37,12 +41,20 @@ self.addEventListener("fetch", (event) => {
 
 async function networkFirst(request) {
   const cache = await caches.open(CACHE);
+  const path = new URL(request.url).pathname;
   try {
     const response = await fetch(request);
-    if (response.ok) cache.put(request, response.clone());
+    if (response.ok && !response.redirected) {
+      cache.put(request, response.clone());
+      if (LOCALE_PAGES.includes(path)) cache.put(LAST_PAGE, new Response(path));
+    }
     return response;
   } catch {
-    return (await cache.match(request)) ?? (await cache.match("/")) ?? Response.error();
+    const cached = await cache.match(request);
+    if (cached) return cached;
+    // Offline "/" (the installed app's start URL): the language page used last, else English.
+    const last = await cache.match(LAST_PAGE);
+    return (await cache.match(last ? await last.text() : "/en")) ?? Response.error();
   }
 }
 

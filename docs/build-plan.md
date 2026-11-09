@@ -254,7 +254,8 @@ Each phase ends with a check-in before moving on.
 - Validity is read from the HDO file header.
 - Git: a pre-commit hook only, which regenerates output and aborts the commit on parser failure.
 - Selection UI: an inline sentence with three dashed-underline combobox tokens: distributor (PRE only, others disabled inside the list) → tariff → program (which includes the device variant).
-- UI: shadcn/ui. i18n: next-intl (no routing) + `@formatjs/intl-localematcher`. Languages: cs / en / ru.
+- UI: shadcn/ui. i18n: next-intl + `@formatjs/intl-localematcher`. Languages: cs / en / ru.
+- Language URLs (changed after launch): `/cs`, `/en`, `/ru` set the UI and link-preview language; `/` (the PWA start URL) is redirected on the server (`src/proxy.ts`, 307) to the language saved in a cookie, else the best match for Accept-Language, else English. Language pages are prerendered with placeholders, so their HTML has real content. The language switch links to the URLs and saves the choice (cookie + localStorage).
 - Countdown: `1:23:45` with live seconds.
 - After expiry: show a banner and keep showing the status.
 - Hosting: Vercel. No push notifications in v1.

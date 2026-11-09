@@ -11,6 +11,8 @@ A tiny web app for households with a two-rate electricity tariff in Prague. Pick
    - A smart meter (AMM) has no printed program – ask your distributor, or compare the switching times with when your boiler or heat pump turns on.
 2. **Install it** to your phone's home screen: *Share → Add to Home Screen* in Safari, or *Install app* in Chrome. It then opens like an app and works offline.
 
+The app speaks Czech, English and Russian – [hdo.cibulka.codes/cs](https://hdo.cibulka.codes/cs), [/en](https://hdo.cibulka.codes/en), [/ru](https://hdo.cibulka.codes/ru); the plain address picks your browser's language.
+
 Your choice is stored only in your browser. The app has no accounts, no tracking and sends nothing anywhere.
 
 ## Tariffs

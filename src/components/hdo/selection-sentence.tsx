@@ -72,7 +72,7 @@ export function SelectionSentence({ period, draft, onChange, className }: Select
   const distributorName = DISTRIBUTORS.find((d) => d.id === draft.distributor)?.name ?? draft.distributor;
 
   return (
-    <p className={cn("text-xl leading-relaxed text-balance sm:text-2xl", "text-white/85", className)}>
+    <p className={cn("text-xl leading-relaxed text-balance sm:text-2xl [@media(max-height:640px)]:text-lg", "text-white/85", className)}>
       {t.rich("sentence", {
         distributor: (punctuation) => (
           <NoWrap trailing={punctuation}>

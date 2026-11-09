@@ -1,10 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { LOCALES, type Locale } from "@/lib/i18n/locales";
 import { cn } from "@/lib/utils";
 
-/** "CS · EN · RU" – the active language is emphasised. */
+/** "CS · EN · RU" – links to /cs, /en, /ru; the active language is emphasised. */
 export function LanguageSwitch({ onChange, className }: { onChange: (locale: Locale) => void; className?: string }) {
   const active = useLocale();
   const t = useTranslations();
@@ -12,11 +13,13 @@ export function LanguageSwitch({ onChange, className }: { onChange: (locale: Loc
   return (
     <nav aria-label={t("language")} className={cn("flex items-center gap-1", "text-sm", className)}>
       {LOCALES.map((locale) => (
-        <button
+        <Link
           key={locale}
-          type="button"
+          href={`/${locale}`}
+          hrefLang={locale}
           lang={locale}
-          aria-pressed={locale === active}
+          aria-current={locale === active ? "page" : undefined}
+          // Remembered so that "/" (e.g. the installed app) opens in this language next time.
           onClick={() => onChange(locale)}
           className={cn(
             "rounded-md px-2 py-1",
@@ -27,7 +30,7 @@ export function LanguageSwitch({ onChange, className }: { onChange: (locale: Loc
           )}
         >
           {locale}
-        </button>
+        </Link>
       ))}
     </nav>
   );

@@ -1,4 +1,10 @@
 {
+  "meta": {
+    "title": "Je teď nízký tarif?",
+    "description": "Odpočet do další změny podle rozvrhu HDO vašeho distributora.",
+    "appName": "Nízký tarif",
+    "ogLocale": "cs_CZ"
+  },
   "rate": {
     "low": "NÍZKÝ",
     "high": "VYSOKÝ"

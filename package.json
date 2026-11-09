@@ -15,6 +15,7 @@
     "parse-egd": "node src/scripts/parse/egd.ts",
     "parse-cez": "node src/scripts/parse/cez.ts",
     "icons": "node src/scripts/icons.ts",
+    "og": "node src/scripts/og.ts",
     "test": "node --test",
     "prepare": "git config core.hooksPath .githooks || true"
   },
@@ -42,6 +43,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.5",
+    "geist": "^1.9.2",
     "sharp": "^0.35.5",
     "tailwindcss": "^4",
     "typescript": "^5",

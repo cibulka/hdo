@@ -32,6 +32,7 @@ function parseDraft(raw: string | null | undefined): DraftSelection {
 }
 
 export function RateScreen({ onLocaleChange, aboutHtml }: { onLocaleChange: (locale: Locale) => void; aboutHtml: string }) {
+  const t = useTranslations();
   const now = useNow();
   const [storedDraft, setStoredDraft] = useStored(SELECTION_KEY);
   const draft = parseDraft(storedDraft);
@@ -47,11 +48,12 @@ export function RateScreen({ onLocaleChange, aboutHtml }: { onLocaleChange: (loc
       {/* Thirds: the sentence centred in the top third, the status centred in the bottom two thirds. */}
       <main
         className={cn(
-          "relative grid min-h-dvh grid-rows-[1fr_2fr]",
+          "relative grid h-dvh grid-rows-[1fr_2fr]",
           "px-4 pt-[max(1rem,env(safe-area-inset-top))] pb-24",
           "text-white",
         )}
       >
+        <h1 className={cn("sr-only")}>{t("meta.title")}</h1>
         <header className={cn("absolute top-[max(1rem,env(safe-area-inset-top))] right-4")}>
           <LanguageSwitch onChange={onLocaleChange} />
         </header>
@@ -120,22 +122,22 @@ function Status({
   return (
     <div key={rate ?? "none"} className={cn("flex flex-col items-center gap-2", rate && "animate-in fade-in slide-in-from-bottom-6 zoom-in-95 duration-700")}>
       <p className={cn("text-sm font-medium uppercase tracking-[0.3em]", "opacity-80")}>{t("status.now")}</p>
-      <h1
+      <p
         // Font size scales with the word length so long words (ВЫСОКИЙ) fit narrow screens; short ones (LOW) are capped.
         style={{ "--chars": t(`rate.${rate ?? "low"}`).length } as React.CSSProperties}
         className={cn(
-          "text-[min(10rem,calc((100vw-2rem)/(max(var(--chars),5)*0.75)))] leading-none font-black tracking-tight",
+          "text-[min(10rem,15dvh,calc((100vw-2rem)/(max(var(--chars),5)*0.75)))] leading-none font-black tracking-tight",
           "drop-shadow-[0_4px_24px_rgb(0_0_0/0.25)]",
           !rate && "opacity-35",
         )}
       >
         {rate ? t(`rate.${rate}`) : "?".repeat(t("rate.low").length)}
-      </h1>
+      </p>
       <p className={cn("mt-4 text-sm uppercase tracking-[0.2em]", "opacity-80")}>{t("status.remaining")}</p>
       {until !== null && now !== null ? (
-        <Countdown ms={until - now} className={cn("text-[clamp(2.5rem,12vw,5rem)] leading-none")} />
+        <Countdown ms={until - now} className={cn("text-[min(clamp(2.5rem,12vw,5rem),9dvh)] leading-none")} />
       ) : (
-        <span className={cn("text-[clamp(2.5rem,12vw,5rem)] leading-none font-semibold tracking-tight tabular-nums", "opacity-35")}>
+        <span className={cn("text-[min(clamp(2.5rem,12vw,5rem),9dvh)] leading-none font-semibold tracking-tight tabular-nums", "opacity-35")}>
           0:00<span className={cn("text-[0.55em]")}>:00</span>
         </span>
       )}
@@ -155,7 +157,7 @@ function Status({
 function Message({ title, children }: { title?: string; children: React.ReactNode }) {
   return (
     <div className={cn("flex max-w-md flex-col gap-2", "rounded-2xl bg-black/25 p-6", "text-left backdrop-blur-sm")}>
-      {title && <h1 className={cn("text-2xl font-bold")}>{title}</h1>}
+      {title && <h2 className={cn("text-2xl font-bold")}>{title}</h2>}
       <div className={cn("text-base", "text-white/90")}>{children}</div>
     </div>
   );
