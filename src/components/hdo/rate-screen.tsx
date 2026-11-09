@@ -52,12 +52,14 @@ export function RateScreen({ onLocaleChange, aboutHtml }: { onLocaleChange: (loc
       <main
         className={cn(
           "relative grid h-dvh grid-rows-[1fr_2fr_auto]",
-          "px-4 pt-[max(1rem,env(safe-area-inset-top))]",
+          "px-4 pt-[calc(env(safe-area-inset-top)+1rem)]",
           "text-white",
         )}
       >
         <h1 className={cn("sr-only")}>{t("meta.title")}</h1>
-        <header className={cn("absolute top-[max(1rem,env(safe-area-inset-top))] right-4")}>
+        {/* In the installed iOS app the page runs under a translucent status bar whose blur reaches a bit
+            below the safe-area inset, so the spacing is added to the inset rather than max()'d with it. */}
+        <header className={cn("absolute top-[calc(env(safe-area-inset-top)+0.75rem)] right-4 z-10")}>
           <LanguageSwitch onChange={onLocaleChange} />
         </header>
 
