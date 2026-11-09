@@ -4,8 +4,10 @@ import { useFormatter, useTranslations } from "next-intl";
 import type { Selection } from "@/lib/hdo/schedule";
 import type { DistributorData } from "@/lib/hdo/schema";
 import { timeline, type Segment } from "@/lib/hdo/timeline";
+import { useHoverPopover } from "@/hooks/use-hover-popover";
 import { cn } from "@/lib/utils";
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "../ui/drawer";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 const HOURS = 24;
 /** Start of the current hour. Prague's UTC offsets are whole hours, so flooring in UTC is exact. */
@@ -43,6 +45,33 @@ export function ScheduleDrawer({ data, selection, now }: { data: DistributorData
   );
 }
 
+function SegmentPopover({ segment, style }: { segment: Segment; style: React.CSSProperties }) {
+  const t = useTranslations("schedule");
+  const format = useFormatter();
+  const { open, setOpen, hoverProps } = useHoverPopover();
+  const time = (instant: number) => format.dateTime(instant, { hour: "2-digit", minute: "2-digit" });
+  const label = t(segment.rate === "low" ? "lowRate" : "highRate");
+  const interval = `${time(segment.runStart)} – ${time(segment.runEnd)}`;
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger
+        aria-label={`${label}, ${interval}`}
+        {...hoverProps}
+        style={style}
+        className={cn(
+          "absolute inset-y-0",
+          "cursor-pointer outline-none hover:bg-white/15 focus-visible:bg-white/25 data-[state=open]:bg-white/25",
+        )}
+      />
+      <PopoverContent {...hoverProps} side="top" collisionPadding={16} className={cn("w-auto", "px-3 py-2", "text-sm")}>
+        <p className={cn("font-semibold", RATE_TEXT[segment.rate])}>{label}</p>
+        <p className={cn("tabular-nums whitespace-nowrap")}>{interval}</p>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
 function Timeline({ segments, from, now }: { segments: Segment[]; from: number; now: number }) {
   const t = useTranslations("schedule");
   const format = useFormatter();
@@ -76,10 +105,14 @@ function Timeline({ segments, from, now }: { segments: Segment[]; from: number; 
               />
             ))}
           </svg>
+          {/* Invisible hit areas over the SVG: hover (mouse) or tap shows the rate and exact interval. */}
+          {segments.map((s) => (
+            <SegmentPopover key={s.start} segment={s} style={{ left: position(s.start), width: position(from + (s.end - s.start)) }} />
+          ))}
           {/* Already passed part of the current hour, dimmed. */}
-          <div className={cn("absolute inset-y-0 left-0", "bg-background/55")} style={{ width: position(now) }} />
+          <div className={cn("pointer-events-none absolute inset-y-0 left-0", "bg-background/55")} style={{ width: position(now) }} />
           {/* Now marker. */}
-          <div className={cn("absolute inset-y-0 w-0.5 -translate-x-1/2", "bg-foreground")} style={{ left: position(now) }} />
+          <div className={cn("pointer-events-none absolute inset-y-0 w-0.5 -translate-x-1/2", "bg-foreground")} style={{ left: position(now) }} />
         </div>
         <div className={cn("relative h-6", "text-xs text-muted-foreground tabular-nums")}>
           {ticks.map((tick, i) => (

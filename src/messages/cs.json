@@ -61,7 +61,9 @@
     "title": "Příštích 24 hodin",
     "description": "Kdy platí nízký a kdy vysoký tarif.",
     "low": "nízký",
-    "high": "vysoký"
+    "high": "vysoký",
+    "lowRate": "Nízký tarif",
+    "highRate": "Vysoký tarif"
   },
   "about": {
     "button": "Co to je?",

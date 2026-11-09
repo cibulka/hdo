@@ -1,28 +1,20 @@
 "use client";
 
 import { InfoIcon } from "lucide-react";
-import { useRef, useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
+import { useHoverPopover } from "@/hooks/use-hover-popover";
 import { cn } from "@/lib/utils";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 /** ⓘ button with a popover: opens on tap/click, and on hover when using a mouse. */
 export function HintPopover({ label, children, className }: { label: string; children: ReactNode; className?: string }) {
-  const [open, setOpen] = useState(false);
-  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const hover = (next: boolean) => (event: React.PointerEvent) => {
-    if (event.pointerType !== "mouse") return;
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    if (next) setOpen(true);
-    else closeTimer.current = setTimeout(() => setOpen(false), 150);
-  };
+  const { open, setOpen, hoverProps } = useHoverPopover();
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger
         aria-label={label}
-        onPointerEnter={hover(true)}
-        onPointerLeave={hover(false)}
+        {...hoverProps}
         className={cn(
           "inline-flex size-7 items-center justify-center",
           "rounded-full",
@@ -36,8 +28,7 @@ export function HintPopover({ label, children, className }: { label: string; chi
       </PopoverTrigger>
       <PopoverContent
         collisionPadding={16}
-        onPointerEnter={hover(true)}
-        onPointerLeave={hover(false)}
+        {...hoverProps}
         className={cn("w-[min(20rem,calc(100vw-2rem))]", "text-sm leading-relaxed")}
       >
         <p className={cn("font-semibold")}>{label}</p>
