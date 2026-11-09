@@ -8,8 +8,8 @@ export type BackgroundMode = "idle" | "low" | "high";
 /** Status-bar colour per mode (theme-color meta), matching the gradients in globals.css. */
 export const THEME_COLORS: Record<BackgroundMode, string> = {
   idle: "#0f172a",
-  low: "#059669",
-  high: "#dc2626",
+  low: "#047857",
+  high: "#991b1b",
 };
 
 /** Full-screen animated gradient; all layers are always mounted so a switch is a crossfade. */

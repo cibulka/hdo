@@ -100,8 +100,10 @@ function Status({ state, now }: { state: RateState | null; now: number | null })
     <div key={rate ?? "none"} className={cn("flex flex-col items-center gap-2", rate && "animate-in fade-in slide-in-from-bottom-6 zoom-in-95 duration-700")}>
       <p className={cn("text-sm font-medium uppercase tracking-[0.3em]", "opacity-80")}>{t("status.now")}</p>
       <h1
+        // Font size scales with the word length so long words (ВЫСОКИЙ) fit narrow screens.
+        style={{ "--chars": rate ? t(`rate.${rate}`).length : 3 } as React.CSSProperties}
         className={cn(
-          "text-[clamp(3.5rem,19vw,10rem)] leading-none font-black tracking-tight",
+          "text-[min(10rem,calc((100vw-2rem)/(var(--chars)*0.75)))] leading-none font-black tracking-tight",
           "drop-shadow-[0_4px_24px_rgb(0_0_0/0.25)]",
           !rate && "opacity-30",
         )}

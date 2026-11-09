@@ -172,29 +172,29 @@
 }
 
 .rate-layer--low {
-  background-color: #047857;
+  background-color: #065f46;
   background-image:
-    radial-gradient(at 18% 22%, #34d399 0, transparent 48%),
-    radial-gradient(at 82% 30%, #a3e635 0, transparent 42%),
-    radial-gradient(at 55% 88%, #0d9488 0, transparent 55%),
-    linear-gradient(140deg, #059669, #10b981 45%, #0f766e);
+    radial-gradient(at 18% 22%, #059669 0, transparent 48%),
+    radial-gradient(at 82% 30%, #4d7c0f 0, transparent 42%),
+    radial-gradient(at 55% 88%, #115e59 0, transparent 55%),
+    linear-gradient(140deg, #047857, #059669 45%, #134e4a);
 }
 .rate-layer--low::after {
-  background: #bef264;
+  background: #65a30d;
   top: 15%;
   left: 45%;
 }
 
 .rate-layer--high {
-  background-color: #b91c1c;
+  background-color: #991b1b;
   background-image:
-    radial-gradient(at 20% 25%, #fb7185 0, transparent 46%),
-    radial-gradient(at 80% 35%, #fb923c 0, transparent 42%),
-    radial-gradient(at 50% 90%, #9f1239 0, transparent 55%),
-    linear-gradient(140deg, #dc2626, #e11d48 45%, #991b1b);
+    radial-gradient(at 20% 25%, #be123c 0, transparent 46%),
+    radial-gradient(at 80% 35%, #9a3412 0, transparent 42%),
+    radial-gradient(at 50% 90%, #881337 0, transparent 55%),
+    linear-gradient(140deg, #991b1b, #9f1239 45%, #7f1d1d);
 }
 .rate-layer--high::after {
-  background: #fdba74;
+  background: #c2410c;
   top: 20%;
   left: 10%;
 }

@@ -12,7 +12,7 @@
     "days": "{count} д"
   },
   "selection": {
-    "sentence": "Я в сети <distributor></distributor>, тариф <tariff></tariff>. У меня программа <program></program> и <device></device>.",
+    "sentence": "Я в сети <distributor>,</distributor> тариф <tariff>.</tariff> У меня программа <program></program> и <device>.</device>",
     "search": "Поиск…",
     "empty": "Ничего не найдено",
     "unsupported": "пока не поддерживается",

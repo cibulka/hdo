@@ -12,7 +12,7 @@
     "days": "{count} d"
   },
   "selection": {
-    "sentence": "I’m on the <distributor></distributor> grid with tariff <tariff></tariff>. I have program <program></program> and <device></device>.",
+    "sentence": "I’m on the <distributor></distributor> grid with tariff <tariff>.</tariff> I have program <program></program> and <device>.</device>",
     "search": "Search…",
     "empty": "Nothing found",
     "unsupported": "not supported yet",

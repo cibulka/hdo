@@ -1,15 +1,9 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import type { ReactNode } from "react";
 import { DISTRIBUTORS } from "@/lib/hdo/data";
-import {
-  deviceOptions,
-  draftForDevice,
-  draftForProgram,
-  draftForTariff,
-  programOptions,
-  type DraftSelection,
-} from "@/lib/hdo/options";
+import { deviceOptions, draftForDevice, draftForProgram, draftForTariff, programOptions, type DraftSelection } from "@/lib/hdo/options";
 import type { Period } from "@/lib/hdo/schema";
 import { cn } from "@/lib/utils";
 import { HintPopover } from "./hint-popover";
@@ -79,58 +73,82 @@ export function SelectionSentence({ period, draft, onChange, className }: Select
   return (
     <p className={cn("text-xl leading-relaxed text-balance sm:text-2xl", "text-white/85", className)}>
       {t.rich("sentence", {
-        distributor: () => (
-          <TokenCombobox
-            {...common}
-            text={distributorName}
-            value={draft.distributor}
-            groups={distributorGroups}
-            onSelect={() => undefined}
-            searchable={false}
-          />
+        distributor: (punctuation) => (
+          <NoWrap trailing={punctuation}>
+            <TokenCombobox
+              {...common}
+              text={distributorName}
+              value={draft.distributor}
+              groups={distributorGroups}
+              onSelect={() => undefined}
+              searchable={false}
+            />
+          </NoWrap>
         ),
-        tariff: () => (
-          <TokenCombobox
-            {...common}
-            text={draft.tariff ?? t("choose")}
-            isPlaceholder={!draft.tariff}
-            value={draft.tariff}
-            groups={tariffGroups}
-            onSelect={(tariff) => onChange(draftForTariff(period, draft, tariff))}
-          />
+        tariff: (punctuation) => (
+          <NoWrap trailing={punctuation}>
+            <TokenCombobox
+              {...common}
+              text={draft.tariff ?? t("choose")}
+              isPlaceholder={!draft.tariff}
+              value={draft.tariff}
+              groups={tariffGroups}
+              onSelect={(tariff) => onChange(draftForTariff(period, draft, tariff))}
+            />
+          </NoWrap>
         ),
-        program: () => (
-          <TokenCombobox
-            {...common}
-            text={draft.command ?? t("choose")}
-            isPlaceholder={!draft.command}
-            interactive={programs.length > 1}
-            value={draft.command}
-            groups={programGroups}
-            onSelect={(command) => onChange(draftForProgram(period, draft, command))}
-            searchable={programs.length > 6}
-          />
+        program: (punctuation) => (
+          <NoWrap trailing={punctuation}>
+            <TokenCombobox
+              {...common}
+              text={draft.command ?? t("choose")}
+              isPlaceholder={!draft.command}
+              interactive={programs.length > 1}
+              value={draft.command}
+              groups={programGroups}
+              onSelect={(command) => onChange(draftForProgram(period, draft, command))}
+              searchable={programs.length > 6}
+            />
+          </NoWrap>
         ),
-        device: () => (
-          <TokenCombobox
-            {...common}
-            text={selectedDevice ? tDeviceSentence(selectedDevice.device) : t("choose")}
-            isPlaceholder={!selectedDevice}
-            interactive={devices.length > 1}
-            value={selectedDeviceKey}
-            groups={deviceGroups}
-            onSelect={(key) => {
-              const option = devices.find((d) => d.key === key);
-              if (option) onChange(draftForDevice(draft, option));
-            }}
-            searchable={false}
-          />
+        device: (punctuation) => (
+          <NoWrap
+            trailing={
+              <>
+                {punctuation}
+                <HintPopover label={t("hintLabel")} className={cn("ml-1.5 align-middle")}>
+                  {t("hint")}
+                </HintPopover>
+              </>
+            }
+          >
+            <TokenCombobox
+              {...common}
+              text={selectedDevice ? tDeviceSentence(selectedDevice.device) : t("choose")}
+              isPlaceholder={!selectedDevice}
+              interactive={devices.length > 1}
+              value={selectedDeviceKey}
+              groups={deviceGroups}
+              onSelect={(key) => {
+                const option = devices.find((d) => d.key === key);
+                if (option) onChange(draftForDevice(draft, option));
+              }}
+              searchable={false}
+            />
+          </NoWrap>
         ),
       })}
-      <HintPopover label={t("hintLabel")} className={cn("ml-1.5 align-middle")}>
-        {t("hint")}
-      </HintPopover>
     </p>
+  );
+}
+
+/** Keeps a token together with the punctuation (and icon) right after it, so they never wrap apart. */
+function NoWrap({ children, trailing }: { children: ReactNode; trailing?: ReactNode }) {
+  return (
+    <span className={cn("whitespace-nowrap")}>
+      {children}
+      {trailing}
+    </span>
   );
 }
 

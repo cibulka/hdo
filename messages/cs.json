@@ -12,7 +12,7 @@
     "days": "{count} d"
   },
   "selection": {
-    "sentence": "Jsem v síti <distributor></distributor> se sazbou <tariff></tariff>. Mám program <program></program> a <device></device>.",
+    "sentence": "Jsem v síti <distributor></distributor> se sazbou <tariff>.</tariff> Mám program <program></program> a <device>.</device>",
     "search": "Hledat…",
     "empty": "Nic nenalezeno",
     "unsupported": "zatím nepodporováno",
