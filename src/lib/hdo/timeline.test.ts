@@ -4,7 +4,7 @@ import { test } from "node:test";
 import { pragueInstant } from "./prague.ts";
 import type { Selection } from "./schedule.ts";
 import type { DistributorData } from "./schema.ts";
-import { hourTicks, timeline } from "./timeline.ts";
+import { timeline } from "./timeline.ts";
 
 const pre: DistributorData = JSON.parse(readFileSync(new URL("../../../output/pre.json", import.meta.url), "utf8"));
 const amm605: Selection = { distributor: "pre", tariff: "D57d", command: "605", device: "amm", variantId: "1053" };
@@ -28,11 +28,4 @@ test("timeline covers exactly 24 h with alternating rates", () => {
   });
   const lowMinutes = segments.filter((s) => s.rate === "low").reduce((sum, s) => sum + s.end - s.start, 0) / 60_000;
   assert.ok(lowMinutes > 19 * 60 && lowMinutes < 21 * 60, `about 20 h of low rate, got ${lowMinutes / 60} h`);
-});
-
-test("hour ticks every 3 hours", () => {
-  const from = pragueInstant({ year: 2026, month: 11, day: 9 }, 20 * 60 + 47);
-  const ticks = hourTicks(from, from + 24 * 3_600_000);
-  assert.equal(ticks.length, 8);
-  assert.equal(ticks[0], pragueInstant({ year: 2026, month: 11, day: 9 }, 21 * 60));
 });

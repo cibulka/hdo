@@ -1,4 +1,4 @@
-import { addDays, pragueDate, pragueInstant } from "./prague.ts";
+import { addDays, pragueDate } from "./prague.ts";
 import { lowIntervals, type Rate, type Selection } from "./schedule.ts";
 import type { DistributorData } from "./schema.ts";
 
@@ -39,16 +39,4 @@ export function timeline(data: DistributorData, selection: Selection, from: numb
       runStart: run.start,
       runEnd: run.end,
     }));
-}
-
-/** Instants of whole Prague hours divisible by `step` within (from, to). */
-export function hourTicks(from: number, to: number, step = 3): number[] {
-  const ticks: number[] = [];
-  for (let date = addDays(pragueDate(from), 0), i = 0; i < 3; date = addDays(date, 1), i++) {
-    for (let hour = 0; hour < 24; hour += step) {
-      const t = pragueInstant(date, hour * 60);
-      if (t > from && t < to) ticks.push(t);
-    }
-  }
-  return ticks;
 }
