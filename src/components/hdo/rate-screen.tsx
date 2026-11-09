@@ -10,6 +10,7 @@ import { getRateState, isStale, periodFor, type RateState, type Selection } from
 import type { DistributorData } from "@/lib/hdo/schema";
 import type { Locale } from "@/lib/i18n/locales";
 import { cn } from "@/lib/utils";
+import { AboutDrawer } from "./about-drawer";
 import { Countdown } from "./countdown";
 import { LanguageSwitch } from "./language-switch";
 import { RateBackground } from "./rate-background";
@@ -30,7 +31,7 @@ function parseDraft(raw: string | null | undefined): DraftSelection {
   return { distributor: "pre" };
 }
 
-export function RateScreen({ onLocaleChange }: { onLocaleChange: (locale: Locale) => void }) {
+export function RateScreen({ onLocaleChange, aboutHtml }: { onLocaleChange: (locale: Locale) => void; aboutHtml: string }) {
   const now = useNow();
   const [storedDraft, setStoredDraft] = useStored(SELECTION_KEY);
   const draft = parseDraft(storedDraft);
@@ -66,7 +67,7 @@ export function RateScreen({ onLocaleChange }: { onLocaleChange: (locale: Locale
 
         <footer className={cn("absolute inset-x-0 bottom-0 flex flex-col items-center gap-3")}>
           <ValidityNote data={data} />
-          <MadeBy />
+          <MadeBy aboutHtml={aboutHtml} />
         </footer>
       </main>
     </>
@@ -160,7 +161,7 @@ function Message({ title, children }: { title?: string; children: React.ReactNod
 }
 
 /** Credit tab glued to the bottom edge. */
-function MadeBy() {
+function MadeBy({ aboutHtml }: { aboutHtml: string }) {
   return (
     <p
       className={cn(
@@ -177,6 +178,8 @@ function MadeBy() {
       >
         cibulka.codes
       </a>
+      <span className={cn("mx-2", "opacity-50")}>·</span>
+      <AboutDrawer html={aboutHtml} triggerClassName={cn("font-medium text-white", "hover:text-white/80")} />
     </p>
   );
 }

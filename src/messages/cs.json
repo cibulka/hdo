@@ -64,5 +64,10 @@
     "high": "vysoký",
     "now": "teď",
     "close": "Zavřít"
+  },
+  "about": {
+    "button": "Co to je?",
+    "title": "Co to je?",
+    "close": "Zavřít"
   }
 }

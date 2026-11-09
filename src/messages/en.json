@@ -64,5 +64,10 @@
     "high": "high",
     "now": "now",
     "close": "Close"
+  },
+  "about": {
+    "button": "What is this?",
+    "title": "What is this?",
+    "close": "Close"
   }
 }

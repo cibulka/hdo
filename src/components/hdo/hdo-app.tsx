@@ -21,7 +21,7 @@ const browserLanguages = () => navigator.languages.join(",");
  * Client root. Locale = stored choice, else a guess from the browser languages.
  * During prerendering only the idle background is rendered (nothing here is known on the server).
  */
-export function HdoApp() {
+export function HdoApp({ aboutHtml }: { aboutHtml: string }) {
   const [stored, setStored] = useStored(LOCALE_KEY);
   const languages = useSyncExternalStore(subscribeNever, browserLanguages, () => null);
 
@@ -35,7 +35,7 @@ export function HdoApp() {
 
   return (
     <NextIntlClientProvider locale={locale} messages={MESSAGES[locale] ?? MESSAGES[DEFAULT_LOCALE]} timeZone={TIME_ZONE}>
-      <RateScreen onLocaleChange={(next) => setStored(next)} />
+      <RateScreen onLocaleChange={(next) => setStored(next)} aboutHtml={aboutHtml} />
     </NextIntlClientProvider>
   );
 }
