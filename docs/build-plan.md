@@ -113,8 +113,8 @@ npm run parse-egd    # exits 1: "EG.D parser is not developed yet"
 npm run parse-cez    # exits 1: "ČEZ Distribuce parser is not developed yet"
 ```
 
-- `scripts/parse/<distributor>.ts`, plain Node scripts (Node 25 runs TS directly). They're deterministic and need no AI.
-- **Shared code** (`scripts/parse/shared/`):
+- `src/scripts/parse/<distributor>.ts`, plain Node scripts (Node 25 runs TS directly). They're deterministic and need no AI.
+- **Shared code** (`src/scripts/parse/shared/`):
   - the output schema and its validation;
   - time-string parsing;
   - window normalisation;
@@ -142,7 +142,7 @@ npm run parse-cez    # exits 1: "ČEZ Distribuce parser is not developed yet"
 
 Download the files into `input/pre/` → `git commit` (the hook regenerates `output/pre.json`) → `git push` → Vercel deploys.
 
-### Output schema (final – `lib/hdo/schema.ts`)
+### Output schema (final – `src/lib/hdo/schema.ts`)
 
 `DistributorData` → `periods[]` (`validFrom`, `validTo`) → `tariffs[]` (`code`: "D57d") → `programs[]` (`command`: "573", `label`) → `variants[]`.
 
@@ -151,7 +151,7 @@ Download the files into `input/pre/` → `git commit` (the hook regenerates `out
 - TOU/AMM tables have no validity of their own, so they are included in every period. Periods come from the HDO program files.
 - An HDO command for "C/D 25d_26d" is listed under each tariff it names.
 
-## 3. Time logic (`lib/hdo/schedule.ts`, `prague.ts`, `holidays.ts` – pure functions)
+## 3. Time logic (`src/lib/hdo/schedule.ts`, `prague.ts`, `holidays.ts` – pure functions)
 
 - `getState(data, selection, now)` returns `{ rate: 'low' | 'high', endsAt: Date }`.
 - Everything is calculated in **Europe/Prague** time using `Intl`. DST-safe.

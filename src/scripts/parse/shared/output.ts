@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { DAY_KEYS, type DistributorData, type Variant } from "#/lib/hdo/schema.ts";
 import { ParseError } from "./errors.ts";
 
-export const ROOT = join(import.meta.dirname, "../../..");
+export const ROOT = join(import.meta.dirname, "../../../..");
 export const OUTPUT_DIR = join(ROOT, "output");
 
 /** Structural checks every distributor's output must pass before it is written. */

@@ -4,16 +4,16 @@
   "private": true,
   "type": "module",
   "imports": {
-    "#/*": "./*"
+    "#/*": "./src/*"
   },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "parse-pre": "node scripts/parse/pre.ts",
-    "parse-egd": "node scripts/parse/egd.ts",
-    "parse-cez": "node scripts/parse/cez.ts",
+    "parse-pre": "node src/scripts/parse/pre.ts",
+    "parse-egd": "node src/scripts/parse/egd.ts",
+    "parse-cez": "node src/scripts/parse/cez.ts",
     "test": "node --test",
     "prepare": "git config core.hooksPath .githooks || true"
   },

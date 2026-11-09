@@ -6,7 +6,7 @@ import { pragueInstant } from "./prague.ts";
 import { getRateState, isStale, type Selection } from "./schedule.ts";
 import { DAY_KEYS, type DistributorData, type Week, type Window } from "./schema.ts";
 
-const pre: DistributorData = JSON.parse(readFileSync(new URL("../../output/pre.json", import.meta.url), "utf8"));
+const pre: DistributorData = JSON.parse(readFileSync(new URL("../../../output/pre.json", import.meta.url), "utf8"));
 const amm573: Selection = { distributor: "pre", tariff: "D57d", command: "573", device: "amm", variantId: "1052" };
 
 /** Prague wall-clock time → instant. */

@@ -4,7 +4,7 @@ import { test } from "node:test";
 import { completeSelection, deviceOptions, draftForProgram, draftForTariff, programOptions } from "./options.ts";
 import type { DistributorData } from "./schema.ts";
 
-const pre: DistributorData = JSON.parse(readFileSync(new URL("../../output/pre.json", import.meta.url), "utf8"));
+const pre: DistributorData = JSON.parse(readFileSync(new URL("../../../output/pre.json", import.meta.url), "utf8"));
 const period = pre.periods[0];
 
 test("D57d has two programs, each with four device variants", () => {
