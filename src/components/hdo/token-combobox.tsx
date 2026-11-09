@@ -16,6 +16,8 @@ export interface TokenItem {
   disabled?: boolean;
   /** Shown instead of the description for disabled items, e.g. "not supported yet". */
   note?: string;
+  /** Show the note on the same line as the label (keeps all items the same height). */
+  inlineNote?: boolean;
   warning?: boolean;
 }
 
@@ -94,7 +96,7 @@ export function TokenCombobox({
                     className={cn("items-start", "gap-2")}
                   >
                     <CheckIcon className={cn("mt-0.5 shrink-0", item.value === value ? "opacity-100" : "opacity-0")} />
-                    <span className={cn("flex flex-col")}>
+                    <span className={cn("flex", item.inlineNote ? "flex-row items-baseline gap-2" : "flex-col")}>
                       <span className={cn("font-medium")}>{item.label}</span>
                       {(item.note ?? item.description) && (
                         <span className={cn("text-xs", item.warning ? "text-destructive" : "text-muted-foreground")}>

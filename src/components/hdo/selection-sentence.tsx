@@ -34,6 +34,7 @@ export function SelectionSentence({ period, draft, onChange, className }: Select
         label: d.name,
         disabled: d.id !== "pre",
         note: d.id !== "pre" ? t("unsupported") : undefined,
+        inlineNote: true,
       })),
     },
   ];
