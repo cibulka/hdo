@@ -25,7 +25,7 @@ export function ScheduleDrawer({ data, selection, now }: { data: DistributorData
       >
         {t("button")}
       </DrawerTrigger>
-      <DrawerContent>
+      <DrawerContent className={cn("mx-auto w-full max-w-xl")}>
         <div className={cn("mx-auto w-full max-w-lg", "px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))]")}>
           <DrawerHeader className={cn("px-0")}>
             <DrawerTitle>{t("title")}</DrawerTitle>
