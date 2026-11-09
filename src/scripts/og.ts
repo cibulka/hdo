@@ -122,7 +122,8 @@ const image = new ImageResponse(
         String((i * 3) % 24).padStart(2, "0"),
       ),
     ),
-    h("div", abs({ right: BAR.x, top: BAR.y - 92, color: "rgba(255,255,255,0.85)", fontSize: 26, fontWeight: 600, textDecoration: "underline" }), "hdo.cibulka.codes"),
+    // Underline drawn as a border: satori has no text-underline-offset.
+    h("div", abs({ right: BAR.x, top: BAR.y - 92, color: "rgba(255,255,255,0.85)", fontSize: 26, fontWeight: 600, paddingBottom: 3, borderBottom: "2px solid rgba(255,255,255,0.7)" }), "hdo.cibulka.codes"),
   ),
   {
     width: W,
