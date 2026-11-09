@@ -8,17 +8,17 @@
     "remaining": "zbývá",
     "until": "do {time}",
     "untilDay": "do {day} {time}",
-    "noChange": "beze změny v příštích dnech",
-    "days": "{count} d"
+    "noChange": "beze změny v příštích dnech",
+    "days": "{count} d"
   },
   "selection": {
-    "sentence": "Jsem v síti <distributor></distributor> se <tariff>.</tariff> Mám <program></program> a <device>.</device>",
+    "sentence": "Jsem v síti <distributor></distributor> se <tariff>.</tariff> Mám <program></program> a <device>.</device>",
     "search": "Hledat…",
     "empty": "Nic nenalezeno",
     "unsupported": "zatím nepodporováno",
     "program": "Program {command}",
-    "hours": "{hours} h denně",
-    "hint": "Sazbu najdete ve smlouvě nebo na faktuře. Program je na štítku HDO přijímače; u elektroměru bez přijímače ho zjistíte u distributora.",
+    "hours": "{hours} h denně",
+    "hint": "Sazbu najdete ve smlouvě nebo na faktuře. Program je na štítku HDO přijímače; u elektroměru bez přijímače ho zjistíte u distributora.",
     "dataIssue": "nejasná data",
     "hintLabel": "Kde to najdu?",
     "devicePrinted": "na zařízení: {printed}",
@@ -36,24 +36,24 @@
   },
   "device": {
     "hdo": "HDO přijímač",
-    "tou-a": "Elektroměr se spínacími hodinami (A)",
-    "tou-t": "Elektroměr se spínacími hodinami (T)",
+    "tou-a": "Elektroměr se spínacími hodinami (A)",
+    "tou-t": "Elektroměr se spínacími hodinami (T)",
     "amm": "Chytrý elektroměr (AMM)"
   },
   "validity": {
     "validUntil": "Rozvrh {distributor} platí do {date}",
-    "stale": "Platnost rozvrhu skončila {date}. Časy se mohly změnit – ověřte je u distributora."
+    "stale": "Platnost rozvrhu skončila {date}. Časy se mohly změnit – ověřte je u distributora."
   },
   "issue": {
     "title": "Nejednoznačná data",
-    "body": "Pro tento program má distributor v tabulkách víc různých rozvrhů, takže nevíme, který platí. Ověřte ho u distributora, nebo vyberte jiný program."
+    "body": "Pro tento program má distributor v tabulkách víc různých rozvrhů, takže nevíme, který platí. Ověřte ho u distributora, nebo vyberte jiný program."
   },
-  "notFound": "Vybraný program v aktuálních datech není. Vyberte ho prosím znovu.",
+  "notFound": "Vybraný program v aktuálních datech není. Vyberte ho prosím znovu.",
   "language": "Jazyk",
   "deviceSentence": {
     "hdo": "HDO přijímač",
-    "tou-a": "elektroměr se spínacími hodinami (A)",
-    "tou-t": "elektroměr se spínacími hodinami (T)",
+    "tou-a": "elektroměr se spínacími hodinami (A)",
+    "tou-t": "elektroměr se spínacími hodinami (T)",
     "amm": "chytrý elektroměr"
   }
 }
