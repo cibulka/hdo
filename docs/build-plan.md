@@ -1,6 +1,6 @@
 # HDO – build plan
 
-> Status: **approved 2026-11-09**. Phases 1–4 done. Next: phase 5 (transitions).
+> Status: **approved 2026-11-09**. Phases 1–7 done (5 kept simple: background crossfade + fade-in of the rate word; 7 = 24-hour drawer + README tariffs). Next: deploy to Vercel.
 
 ## Goal
 
