@@ -145,13 +145,13 @@ function MadeBy() {
   return (
     <p
       className={cn(
-        "rounded-t-xl bg-black px-4 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))]",
+        "rounded-t-xl bg-black/30 px-4 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] backdrop-blur-md",
         "text-xs text-white/80",
       )}
     >
       Made by{" "}
       <a
-        href="https://cibulka.codes"
+        href="https://www.cibulka.codes"
         target="_blank"
         rel="noopener"
         className={cn("font-medium text-white underline underline-offset-2", "hover:text-white/80 focus-visible:outline-2 focus-visible:outline-white")}
