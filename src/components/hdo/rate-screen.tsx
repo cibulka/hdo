@@ -47,11 +47,12 @@ export function RateScreen({ onLocaleChange, aboutHtml }: { onLocaleChange: (loc
   return (
     <>
       <RateBackground mode={mode} />
-      {/* Thirds: the sentence centred in the top third, the status centred in the bottom two thirds. */}
+      {/* Thirds of the space above the footer: the sentence centred in the top third, the status in
+          the bottom two thirds. The footer is a real row (not overlaid), so centring is exact. */}
       <main
         className={cn(
-          "relative grid h-dvh grid-rows-[1fr_2fr]",
-          "px-4 pt-[max(1rem,env(safe-area-inset-top))] pb-24",
+          "relative grid h-dvh grid-rows-[1fr_2fr_auto]",
+          "px-4 pt-[max(1rem,env(safe-area-inset-top))]",
           "text-white",
         )}
       >
@@ -65,11 +66,11 @@ export function RateScreen({ onLocaleChange, aboutHtml }: { onLocaleChange: (loc
           {now !== null && isStale(data, now) && <StaleBanner data={data} />}
         </div>
 
-        <section className={cn("relative flex flex-col items-center justify-center", "pb-8", "text-center")}>
+        <section className={cn("flex flex-col items-center justify-center", "py-4", "text-center")}>
           <Status state={state} now={now} data={data} selection={selection} />
         </section>
 
-        <footer className={cn("absolute inset-x-0 bottom-0 flex flex-col items-center gap-3")}>
+        <footer className={cn("flex flex-col items-center gap-3")}>
           <ValidityNote data={data} />
           <MadeBy aboutHtml={aboutHtml} />
         </footer>
@@ -123,7 +124,8 @@ function Status({
 
   return (
     <div key={rate ?? "none"} className={cn("flex flex-col items-center gap-2", rate && "animate-in fade-in slide-in-from-bottom-6 zoom-in-95 duration-700")}>
-      <p className={cn("text-sm font-medium uppercase tracking-[0.3em]", "opacity-80")}>{t("status.now")}</p>
+      {/* Letter-spacing is also added after the last letter; the same padding on the left re-centres the text. */}
+      <p className={cn("pl-[0.3em]", "text-sm font-medium uppercase tracking-[0.3em]", "opacity-80")}>{t("status.now")}</p>
       <p
         // Font size scales with the word length so long words (ВЫСОКИЙ) fit narrow screens; short ones (LOW) are capped.
         style={{ "--chars": t(`rate.${rate ?? "low"}`).length } as React.CSSProperties}
@@ -135,7 +137,7 @@ function Status({
       >
         {rate ? t(`rate.${rate}`) : "?".repeat(t("rate.low").length)}
       </p>
-      <p className={cn("mt-4 text-sm uppercase tracking-[0.2em]", "opacity-80")}>{t("status.remaining")}</p>
+      <p className={cn("mt-4 pl-[0.2em]", "text-sm uppercase tracking-[0.2em]", "opacity-80")}>{t("status.remaining")}</p>
       {until !== null && now !== null ? (
         <Countdown ms={until - now} className={cn("text-[min(clamp(2.5rem,12vw,5rem),9dvh)] leading-none")} />
       ) : (
