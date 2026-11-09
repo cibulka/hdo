@@ -1,6 +1,6 @@
 # HDO – build plan
 
-> Status: **approved 2026-11-09**. Phases 1–2 done. Next: phase 3 (time logic).
+> Status: **approved 2026-11-09**. Phases 1–3 done. Next: phase 4 (core UI).
 
 ## Goal
 
@@ -151,7 +151,7 @@ Download the files into `input/pre/` → `git commit` (the hook regenerates `out
 - TOU/AMM tables have no validity of their own, so they are included in every period. Periods come from the HDO program files.
 - An HDO command for "C/D 25d_26d" is listed under each tariff it names.
 
-## 3. Time logic (`lib/schedule.ts`, pure functions)
+## 3. Time logic (`lib/hdo/schedule.ts`, `prague.ts`, `holidays.ts` – pure functions)
 
 - `getState(data, selection, now)` returns `{ rate: 'low' | 'high', endsAt: Date }`.
 - Everything is calculated in **Europe/Prague** time using `Intl`. DST-safe.
