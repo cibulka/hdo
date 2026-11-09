@@ -5,7 +5,7 @@ import { useStored } from "@/hooks/use-stored";
 import { useNow } from "@/hooks/use-now";
 import { DATA, DISTRIBUTORS } from "@/lib/hdo/data";
 import { completeSelection, type DraftSelection } from "@/lib/hdo/options";
-import { isoDate, pragueDate } from "@/lib/hdo/prague";
+import { pragueDate } from "@/lib/hdo/prague";
 import { getRateState, isStale, periodFor, type RateState, type Selection } from "@/lib/hdo/schedule";
 import type { DistributorData } from "@/lib/hdo/schema";
 import type { Locale } from "@/lib/i18n/locales";
@@ -105,14 +105,15 @@ function Status({
 
   const rate = state?.rate ?? null;
   const until = state?.until ?? null;
-  const sameDay = until !== null && now !== null && isoDate(pragueDate(until)) === isoDate(pragueDate(now));
-  const time = until !== null ? format.dateTime(until, { hour: "2-digit", minute: "2-digit" }) : null;
+  // The weekday is only needed when the change is more than a day away (e.g. weekend tariff D61d).
+  const withinDay = until !== null && now !== null && until - now < 24 * 3_600_000;
+  const time = until !== null ? format.dateTime(until, { hour: "numeric", minute: "2-digit" }) : null;
   const untilText =
     until === null
       ? state
         ? t("status.noChange")
         : "\u00a0"
-      : sameDay
+      : withinDay
         ? t("status.until", { time: time! })
         : t("status.untilDay", { day: format.dateTime(until, { weekday: "short" }), time: time! });
 
