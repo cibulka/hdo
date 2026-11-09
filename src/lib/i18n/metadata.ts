@@ -5,6 +5,9 @@ import ru from "@/messages/ru.json";
 import { THEME_COLORS } from "../theme";
 import { LOCALES, type Locale } from "./locales";
 
+/** Name of the installed app (home screen) and site name in link previews – the same in every language. */
+export const APP_NAME = "HDO";
+
 /** Language-neutral link-preview image (npm run og). */
 const OG_IMAGE = {
   url: "/og-image.png",
@@ -13,14 +16,14 @@ const OG_IMAGE = {
   alt: "Green and red halves with a countdown, the lightning app icon and a 24-hour schedule bar",
 };
 
-const META: Record<Locale, { title: string; description: string; appName: string; ogLocale: string }> = { cs: cs.meta, en: en.meta, ru: ru.meta };
+const META: Record<Locale, { title: string; description: string; ogLocale: string }> = { cs: cs.meta, en: en.meta, ru: ru.meta };
 
 /**
  * Title, description and link-preview metadata in one language.
  * `path` is the page's own URL: "/" (auto language, English metadata) or "/cs", "/en", "/ru".
  */
 export function pageMetadata(locale: Locale, path: string): Metadata {
-  const { title, description, appName, ogLocale } = META[locale];
+  const { title, description, ogLocale } = META[locale];
   return {
     // Absolute URLs for the Open Graph / Twitter images (opengraph-image.png, twitter-image.png).
     metadataBase: new URL("https://hdo.cibulka.codes"),
@@ -33,7 +36,7 @@ export function pageMetadata(locale: Locale, path: string): Metadata {
     openGraph: {
       title,
       description,
-      siteName: appName,
+      siteName: APP_NAME,
       type: "website",
       url: path,
       locale: ogLocale,
@@ -41,7 +44,7 @@ export function pageMetadata(locale: Locale, path: string): Metadata {
       images: [OG_IMAGE],
     },
     twitter: { card: "summary_large_image", title, description, images: [OG_IMAGE] },
-    appleWebApp: { capable: true, title: appName, statusBarStyle: "black-translucent" },
+    appleWebApp: { capable: true, title: APP_NAME, statusBarStyle: "black-translucent" },
   };
 }
 

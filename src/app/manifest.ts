@@ -1,12 +1,14 @@
 import type { MetadataRoute } from "next";
+import { APP_NAME } from "@/lib/i18n/metadata";
 import { THEME_COLORS } from "@/lib/theme";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Nízký tarif",
-    short_name: "Nízký tarif",
-    description: "Je teď nízký tarif? Kolik zbývá? Podle rozvrhu HDO distributora.",
-    lang: "cs",
+    // Language-neutral: one manifest serves all languages (the start URL redirects to the right one).
+    name: APP_NAME,
+    short_name: APP_NAME,
+    description: "Is it low rate right now? A live countdown to the next switch of your two-rate electricity tariff.",
+    lang: "en",
     start_url: "/",
     scope: "/",
     display: "standalone",

@@ -2,7 +2,6 @@
   "meta": {
     "title": "Is it low rate right now?",
     "description": "A live countdown to the next switch, based on your distributor’s HDO schedule.",
-    "appName": "Low rate",
     "ogLocale": "en_US"
   },
   "rate": {
