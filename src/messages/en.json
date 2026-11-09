@@ -62,7 +62,6 @@
     "description": "When the low and high rates apply.",
     "low": "low",
     "high": "high",
-    "now": "now",
     "close": "Close"
   },
   "about": {

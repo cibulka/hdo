@@ -19,7 +19,13 @@ test("timeline covers exactly 24 h with alternating rates", () => {
     assert.notEqual(s.rate, segments[i].rate);
   });
   // Monday 20:47, program 605 smart meter: high until 21:00
-  assert.deepEqual(segments[0], { start: from, end: pragueInstant({ year: 2026, month: 11, day: 9 }, 21 * 60), rate: "high" });
+  assert.deepEqual(segments[0], {
+    start: from,
+    end: pragueInstant({ year: 2026, month: 11, day: 9 }, 21 * 60),
+    rate: "high",
+    runStart: pragueInstant({ year: 2026, month: 11, day: 9 }, 20 * 60 + 15), // the run began before the window
+    runEnd: pragueInstant({ year: 2026, month: 11, day: 9 }, 21 * 60),
+  });
   const lowMinutes = segments.filter((s) => s.rate === "low").reduce((sum, s) => sum + s.end - s.start, 0) / 60_000;
   assert.ok(lowMinutes > 19 * 60 && lowMinutes < 21 * 60, `about 20 h of low rate, got ${lowMinutes / 60} h`);
 });

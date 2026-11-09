@@ -169,6 +169,8 @@ function MadeBy({ aboutHtml }: { aboutHtml: string }) {
         "text-xs text-white/80",
       )}
     >
+      <AboutDrawer html={aboutHtml} triggerClassName={cn("text-white/60", "hover:text-white/80")} />
+      <span className={cn("mx-2", "opacity-50")}>·</span>
       Made by{" "}
       <a
         href="https://www.cibulka.codes"
@@ -178,8 +180,6 @@ function MadeBy({ aboutHtml }: { aboutHtml: string }) {
       >
         cibulka.codes
       </a>
-      <span className={cn("mx-2", "opacity-50")}>·</span>
-      <AboutDrawer html={aboutHtml} triggerClassName={cn("font-medium text-white", "hover:text-white/80")} />
     </p>
   );
 }

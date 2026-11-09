@@ -62,7 +62,6 @@
     "description": "Kdy platí nízký a kdy vysoký tarif.",
     "low": "nízký",
     "high": "vysoký",
-    "now": "teď",
     "close": "Zavřít"
   },
   "about": {
