@@ -10,8 +10,9 @@ import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, Dr
 const HOURS = 24;
 /** Start of the current hour. Prague's UTC offsets are whole hours, so flooring in UTC is exact. */
 const hourStart = (instant: number) => Math.floor(instant / 3_600_000) * 3_600_000;
-const RATE_BG = { low: "bg-emerald-600", high: "bg-red-700" } as const;
-const RATE_FILL = { low: "fill-emerald-600", high: "fill-red-700" } as const;
+// Softer, less saturated tones: saturated red next to green produces visual artefacts (chromostereopsis).
+const RATE_BG = { low: "bg-emerald-400", high: "bg-rose-400" } as const;
+const RATE_FILL = { low: "fill-emerald-400", high: "fill-rose-400" } as const;
 const RATE_TEXT = { low: "text-emerald-700 dark:text-emerald-400", high: "text-red-700 dark:text-red-400" } as const;
 
 /** Underlined "Show next 24 hours" button opening a bottom drawer with a low/high timeline. */
