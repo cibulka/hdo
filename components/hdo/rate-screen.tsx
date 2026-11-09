@@ -42,23 +42,29 @@ export function RateScreen({ onLocaleChange }: { onLocaleChange: (locale: Locale
   return (
     <>
       <RateBackground mode={mode} />
-      <main className={cn("relative flex min-h-dvh flex-col", "px-4 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))]", "text-white")}>
-        <header className={cn("flex justify-end")}>
+      {/* Thirds: the sentence centred in the top third, the status centred in the bottom two thirds. */}
+      <main
+        className={cn(
+          "relative grid min-h-dvh grid-rows-[1fr_2fr]",
+          "px-4 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))]",
+          "text-white",
+        )}
+      >
+        <header className={cn("absolute top-[max(1rem,env(safe-area-inset-top))] right-4")}>
           <LanguageSwitch onChange={onLocaleChange} />
         </header>
 
-        <div className={cn("mx-auto flex w-full max-w-xl flex-col items-center gap-3", "mt-4", "text-center")}>
+        <div className={cn("mx-auto flex w-full max-w-xl flex-col items-center justify-center gap-3", "pt-10", "text-center")}>
           <SelectionSentence period={period} draft={draft} onChange={(next) => setStoredDraft(JSON.stringify(next))} />
           {now !== null && isStale(data, now) && <StaleBanner data={data} />}
         </div>
 
-        <section className={cn("flex flex-1 flex-col items-center justify-center", "py-8", "text-center")}>
+        <section className={cn("relative flex flex-col items-center justify-center", "pb-8", "text-center")}>
           <Status state={state} now={now} />
+          <footer className={cn("absolute inset-x-0 bottom-0")}>
+            <ValidityNote data={data} />
+          </footer>
         </section>
-
-        <footer className={cn("text-center")}>
-          <ValidityNote data={data} />
-        </footer>
       </main>
     </>
   );
