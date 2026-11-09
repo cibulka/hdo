@@ -1,6 +1,6 @@
 # HDO – build plan
 
-> Status: **approved 2026-11-09**. Phase 1 in progress.
+> Status: **approved 2026-11-09**. Phase 1 done (parser rules below). Next: phase 2.
 
 ## Goal
 
@@ -38,20 +38,59 @@ Inside PRE there are **two different D57d programs**, identified by their NT com
 - 573 and 605 are very different. For example, Mon 09:30 is NT in 573 and VT in 605.
 - Device variants of the same program differ too:
   - TOU-T is shifted by about ±5–15 minutes;
-  - TOU-A Mon–Thu has 3:00–8:00 where HDO has 3:00–6:20.
+  - TOU-A Mon–Thu has 3:00–8:00 where HDO has 3:00–6:20;
+  - day shapes move between devices: in AMM 573, Monday looks like Saturday, while in TOU-A 573, Friday looks like Saturday. We follow the files as they are.
 
 So the picker needs: **tariff → program (command number) → device type**.
 
-### Parser rules found so far
+### Parser rules (phase 1 – verified with a prototype)
 
-- We show only the **NT command / tariff register** (e.g. 573).
-  - The "spotřebič" command (574) is identical to it in the files checked.
-  - The "TUV" command (575, hot water) and the "servisní" command are excluded.
-- `0:00` as an end time means midnight (end of day).
-- A program's NT command number links all its device variants. For TOU it is the `Registry` / `Tarify` value; for AMM it is the register row.
-- **Holidays (`svátek` / `SV`)** have their own row. Czech public holidays are computed in code: fixed dates plus Good Friday and Easter Monday.
-- The PRE files contain inconsistencies, and the parser must tolerate them. For example, the TOU-A index lists `AD3 573 574 575`, while the sheet says `AD3 573 575 575`.
-- A following program, if one ever exists, is included with its own `od` date. A note-only file is skipped, and the note is printed.
+A throwaway prototype normalised all 5 files. Every included program yields the expected daily NT hours: 8 h for the 25/26/27 tariffs, 16 or 20 h for 35, 20 h for 45/46/57, 22 or 20 h for 56, and for D61d 0 h Mon–Thu, 12 / 24 / 22 h Fri–Sun, 0 h on holidays. **The parser keeps this as a self-check** and prints daily NT hours per program in its summary.
+
+**Common**
+- **The meaning of a time depends on its column, not on its position in the row.** Each column header says `zapnout`/`Zap` (NT on) or `vypnout`/`Vyp` (NT off).
+  - A row may start in a `Vyp` column, e.g. `Vyp 0:00`, which means "off at the start of the day".
+  - A row with only `Zap 0:00` means NT all day.
+  - If NT is still on at the last value, it lasts until 24:00.
+- `0:00` in an off column after a later on time means 24:00.
+- An empty day row means no NT that day (D61d Mon–Thu and holidays).
+- Day keys are `mon…sun` plus `hol` (svátek / `SV`). Czech public holidays are computed in code: fixed dates plus Good Friday and Easter Monday.
+- We use only the **NT signal** (HDO "Odblokování NT…" commands, TOU `Tarify` register, AMM `TARIF2` block). Relays, appliance (`spotřebič`) and TUV (hot water) commands are ignored.
+
+**HDO file (`.xls`)**
+- Times are Excel day fractions (`0.5` = 12:00). Validity `od`/`do` is stored as Excel date serials in cells M1/M2. Read the raw values, not the formatted text.
+- A command occupies 8 consecutive rows. The code is in column A, the address (`A4B6DP9`) in B, the description in C.
+- Included: descriptions starting with `Odblokování NT`.
+- Excluded, with the reason printed:
+  - negative codes (`-493`, `-509`, …), which are inverted commands;
+  - `servisní povel`, `velkoodběr` and text-only rows ("Vysílán v dvacáté šesté minutě…");
+  - commands with no times at all (e.g. 506, 538, 570, 589, the "NT a spotřebiče" set).
+- The tariff comes from the description via regex, e.g. `D 57d`, `C/D 25d_26d` (→ both C25d/C26d/D25d/D26d), `D35 a D36`. The `-sou` suffix is kept in the label.
+- Stray cells (e.g. a lone `*`) are ignored with a warning.
+- The address has typos, e.g. `A443DP12`. It's used only as a searchable alias.
+
+**TOU-A / TOU-T (`.xlsx`)**
+- The index sheet `TOU tabulky` gives ID → name → `Tarify` register.
+  - IDs and names can have trailing spaces (`TC46_001  `), which are trimmed.
+- Tariff sheets cover one or two tariffs (`AC25_AC26`). A program's schedule is the block whose `Registry` = its `Tarify` register.
+  - The sheet is found by register, not by name: the index says `AC55_001`, but the sheet is `AC56`.
+  - `Relé 1/2` sub-blocks are ignored.
+- Day rows mark days with `x` in the Po…Sv columns, and one row can cover several days.
+- The block names can differ from the index (`AD3 573 575 575` vs `AD3 573 574 575`). The index wins.
+
+**AMM (`.xlsx`)**
+- 1 sheet per tariff (`D57D`). Each program has 3 blocks (relay 1, relay 2, `TARIF2`). Times are `"HH:MM"` strings, and empty cells are `""`.
+- **The same name can appear under two IDs with different hours.** Examples:
+  - `D56 517 518 521` → 1051 (22 h) and 1162 (20 h);
+  - `D35 515…` → 1044 (16 h) and 1155 (20 h);
+  - the same for D35 543, C35 and C56.
+
+  The 11xx IDs match the current HDO program (20 h). Both are kept, and the picker shows the ID plus the daily hours.
+- `C27`/`D27` have two variants each (`…261 261 261` / `…261 261 263`) with identical NT times.
+
+**Following program:** if the file contains a real program, it's included with its own `od` date. A note-only file is skipped, and the note is printed.
+
+**Open:** the "Sdílení 8 / 20" programs (541, 557) exist only in the HDO file. Proposal: include them as tariffs "Sdílení 8" / "Sdílení 20".
 
 ## 2. Data pipeline
 
