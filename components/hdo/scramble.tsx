@@ -15,7 +15,7 @@ function randomLetters(alphabet: string, length: number): string[] {
  * Every letter sits in a fixed-width cell, so changing letters never shifts the layout.
  * With reduced motion it shows one static random frame.
  */
-export function Scramble({ alphabet, length, interval = 90 }: { alphabet: string; length: number; interval?: number }) {
+export function Scramble({ alphabet, length, interval = 250 }: { alphabet: string; length: number; interval?: number }) {
   const [letters, setLetters] = useState<string[]>(() => Array.from({ length }, () => " "));
 
   useEffect(() => {
