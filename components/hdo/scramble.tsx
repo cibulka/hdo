@@ -1,31 +1,38 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
-const reducedMotion = () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-function randomFrom(alphabet: string, pattern: string): string {
+function randomLetters(alphabet: string, length: number): string[] {
   const chars = [...alphabet];
-  const pick = (set: string[]) => set[Math.floor(Math.random() * set.length)];
-  return [...pattern].map((p) => (p === "#" ? pick(chars) : p === "%" ? pick([..."012345"]) : p)).join("");
+  return Array.from({ length }, () => chars[Math.floor(Math.random() * chars.length)]);
 }
 
 /**
- * Placeholder that keeps flickering random characters, e.g. letters in place of LOW/HIGH or
- * digits in place of the countdown. `pattern` marks random positions with "#" (any character of
- * `alphabet`) or "%" (0–5, for the tens of minutes/seconds): "#:%#" → "4:07".
+ * Placeholder of `length` flickering random letters (e.g. in place of LOW/HIGH).
+ * Every letter sits in a fixed-width cell, so changing letters never shifts the layout.
  * With reduced motion it shows one static random frame.
  */
-export function Scramble({ alphabet, pattern, interval = 90 }: { alphabet: string; pattern: string; interval?: number }) {
-  const [text, setText] = useState(() => pattern.replace(/[#%]/g, "\u2007"));
+export function Scramble({ alphabet, length, interval = 90 }: { alphabet: string; length: number; interval?: number }) {
+  const [letters, setLetters] = useState<string[]>(() => Array.from({ length }, () => " "));
 
   useEffect(() => {
-    const tick = () => setText(randomFrom(alphabet, pattern));
+    const tick = () => setLetters(randomLetters(alphabet, length));
     tick();
     if (reducedMotion()) return;
     const id = setInterval(tick, interval);
     return () => clearInterval(id);
-  }, [alphabet, pattern, interval]);
+  }, [alphabet, length, interval]);
 
-  return <span aria-hidden>{text}</span>;
+  return (
+    <span aria-hidden className={cn("inline-flex")}>
+      {letters.map((letter, i) => (
+        <span key={i} className={cn("inline-block w-[0.9em]", "text-center")}>
+          {letter}
+        </span>
+      ))}
+    </span>
+  );
 }

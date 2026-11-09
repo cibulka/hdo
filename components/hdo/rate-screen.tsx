@@ -108,24 +108,22 @@ function Status({ state, now }: { state: RateState | null; now: number | null })
       <p className={cn("text-sm font-medium uppercase tracking-[0.3em]", "opacity-80")}>{t("status.now")}</p>
       <h1
         // Font size scales with the word length so long words (ВЫСОКИЙ) fit narrow screens; short ones (LOW) are capped.
-        style={{ "--chars": t(`rate.${rate ?? "low"}`).length } as React.CSSProperties}
+        // The placeholder's fixed 0.9em letter cells are wider than real letters (~0.75em), so it counts 1.2× more.
+        style={{ "--chars": rate ? t(`rate.${rate}`).length : t("rate.low").length * 1.2 } as React.CSSProperties}
         className={cn(
           "text-[min(10rem,calc((100vw-2rem)/(max(var(--chars),5)*0.75)))] leading-none font-black tracking-tight",
           "drop-shadow-[0_4px_24px_rgb(0_0_0/0.25)]",
           !rate && "opacity-35",
         )}
       >
-        {rate ? t(`rate.${rate}`) : <Scramble alphabet={t("placeholder.alphabet")} pattern={"#".repeat(t("rate.low").length)} />}
+        {rate ? t(`rate.${rate}`) : <Scramble alphabet={t("placeholder.alphabet")} length={t("rate.low").length} />}
       </h1>
       <p className={cn("mt-4 text-sm uppercase tracking-[0.2em]", "opacity-80")}>{t("status.remaining")}</p>
       {until !== null && now !== null ? (
         <Countdown ms={until - now} className={cn("text-[clamp(2.5rem,12vw,5rem)] leading-none")} />
       ) : (
         <span className={cn("text-[clamp(2.5rem,12vw,5rem)] leading-none font-semibold tracking-tight tabular-nums", "opacity-35")}>
-          <Scramble alphabet="0123456789" pattern="#:%#" />
-          <span className={cn("text-[0.55em]")}>
-            <Scramble alphabet="0123456789" pattern=":%#" />
-          </span>
+          0:00<span className={cn("text-[0.55em]")}>:00</span>
         </span>
       )}
       <p className={cn("mt-1 text-base", "opacity-85")}>{untilText}</p>
