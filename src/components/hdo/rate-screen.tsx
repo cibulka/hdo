@@ -2,6 +2,7 @@
 
 import { useFormatter, useTranslations } from "next-intl";
 import { useStored } from "@/hooks/use-stored";
+import { useInstall } from "@/hooks/use-install";
 import { useNow } from "@/hooks/use-now";
 import { DATA, DISTRIBUTORS } from "@/lib/hdo/data";
 import { completeSelection, type DraftSelection } from "@/lib/hdo/options";
@@ -11,6 +12,7 @@ import type { DistributorData } from "@/lib/hdo/schema";
 import type { Locale } from "@/lib/i18n/locales";
 import { cn } from "@/lib/utils";
 import { AboutDrawer } from "./about-drawer";
+import { InstallButton } from "./install-button";
 import { Countdown } from "./countdown";
 import { LanguageSwitch } from "./language-switch";
 import { RateBackground } from "./rate-background";
@@ -165,25 +167,42 @@ function Message({ title, children }: { title?: string; children: React.ReactNod
 
 /** Credit tab glued to the bottom edge. */
 function MadeBy({ aboutHtml }: { aboutHtml: string }) {
+  const separator = <span className={cn("mx-2", "opacity-50")}>·</span>;
   return (
     <p
       className={cn(
+        "flex items-center",
         "rounded-t-xl bg-black/30 px-4 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] backdrop-blur-md",
-        "text-xs text-white/80",
+        "text-xs whitespace-nowrap text-white/80",
       )}
     >
       <AboutDrawer html={aboutHtml} triggerClassName={cn("text-white/60", "hover:text-white/80")} />
-      <span className={cn("mx-2", "opacity-50")}>·</span>
-      Made by{" "}
-      <a
-        href="https://www.cibulka.codes"
-        target="_blank"
-        rel="noopener"
-        className={cn("font-medium text-white underline underline-offset-2", "hover:text-white/80 focus-visible:outline-2 focus-visible:outline-white")}
-      >
-        cibulka.codes
-      </a>
+      {separator}
+      <span>
+        Made by{" "}
+        <a
+          href="https://www.cibulka.codes"
+          target="_blank"
+          rel="noopener"
+          className={cn("font-medium text-white underline underline-offset-2", "hover:text-white/80 focus-visible:outline-2 focus-visible:outline-white")}
+        >
+          cibulka.codes
+        </a>
+      </span>
+      <InstallLink separator={separator} />
     </p>
+  );
+}
+
+/** Install link with its separator; both disappear when installing isn't possible. */
+function InstallLink({ separator }: { separator: React.ReactNode }) {
+  const { kind } = useInstall();
+  if (!kind) return null;
+  return (
+    <>
+      {separator}
+      <InstallButton className={cn("text-white/60", "hover:text-white/80")} />
+    </>
   );
 }
 

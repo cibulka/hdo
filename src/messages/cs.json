@@ -73,5 +73,12 @@
   "about": {
     "button": "Co to je?",
     "title": "Co to je?"
+  },
+  "install": {
+    "button": "Nainstalovat",
+    "title": "Přidat na plochu",
+    "description": "Aplikace se pak otevře jako běžná aplikace a funguje i offline.",
+    "step1": "Klepněte na <b>Sdílet</b> <share></share>",
+    "step2": "Zvolte <b>Přidat na plochu</b> <add></add>"
   }
 }

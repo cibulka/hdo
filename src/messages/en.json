@@ -73,5 +73,12 @@
   "about": {
     "button": "What is this?",
     "title": "What is this?"
+  },
+  "install": {
+    "button": "Install",
+    "title": "Add to Home Screen",
+    "description": "It then opens like a regular app and works offline.",
+    "step1": "Tap <b>Share</b> <share></share>",
+    "step2": "Choose <b>Add to Home Screen</b> <add></add>"
   }
 }

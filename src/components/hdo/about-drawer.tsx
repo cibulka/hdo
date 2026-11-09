@@ -1,5 +1,6 @@
 "use client";
 
+import { CircleHelpIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from "../ui/drawer";
@@ -10,7 +11,10 @@ export function AboutDrawer({ html, triggerClassName }: { html: string; triggerC
 
   return (
     <Drawer>
-      <DrawerTrigger className={cn("cursor-pointer underline underline-offset-2", triggerClassName)}>{t("button")}</DrawerTrigger>
+      <DrawerTrigger className={cn("inline-flex items-center gap-1", "cursor-pointer underline underline-offset-2", triggerClassName)}>
+        <CircleHelpIcon aria-hidden className={cn("size-3.5 shrink-0")} />
+        {t("button")}
+      </DrawerTrigger>
       <DrawerContent className={cn("mx-auto w-full max-w-xl", "data-[vaul-drawer-direction=bottom]:max-h-[90dvh]")}>
         <DrawerTitle className={cn("sr-only")}>{t("title")}</DrawerTitle>
         <div className={cn("overflow-y-auto", "px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))]")}>
