@@ -11,6 +11,7 @@ const HOURS = 24;
 /** Start of the current hour. Prague's UTC offsets are whole hours, so flooring in UTC is exact. */
 const hourStart = (instant: number) => Math.floor(instant / 3_600_000) * 3_600_000;
 const RATE_BG = { low: "bg-emerald-600", high: "bg-red-700" } as const;
+const RATE_FILL = { low: "fill-emerald-600", high: "fill-red-700" } as const;
 const RATE_TEXT = { low: "text-emerald-700 dark:text-emerald-400", high: "text-red-700 dark:text-red-400" } as const;
 
 /** Underlined "Show next 24 hours" button opening a bottom drawer with a low/high timeline. */
@@ -53,15 +54,27 @@ function Timeline({ segments, from, now }: { segments: Segment[]; from: number; 
   return (
     <div className={cn("flex flex-col gap-6")}>
       <div>
-        {/* Border drawn outside the bar (no gap): an inset one darkens the green edge but not the red, so red looks taller. */}
+        {/* SVG with crispEdges: HTML blocks at fractional pixel positions get blended (red+green) edge
+            columns that look like outlines; crisp SVG rects snap every boundary to a whole pixel. */}
         <div className={cn("relative h-10 overflow-hidden", "rounded-lg outline-1 outline-black/20 dark:outline-white/25")}>
-          {segments.map((s) => (
-            <div
-              key={s.start}
-              className={cn("absolute inset-y-0", RATE_BG[s.rate])}
-              style={{ left: position(s.start), width: position(from + (s.end - s.start)) }}
-            />
-          ))}
+          <svg
+            aria-hidden
+            className={cn("absolute inset-0 size-full")}
+            viewBox={`0 0 ${HOURS * 60} 1`}
+            preserveAspectRatio="none"
+            shapeRendering="crispEdges"
+          >
+            {segments.map((s) => (
+              <rect
+                key={s.start}
+                x={(s.start - from) / 60_000}
+                width={(s.end - s.start) / 60_000}
+                y={0}
+                height={1}
+                className={cn(RATE_FILL[s.rate])}
+              />
+            ))}
+          </svg>
           {/* Already passed part of the current hour, dimmed. */}
           <div className={cn("absolute inset-y-0 left-0", "bg-background/55")} style={{ width: position(now) }} />
           {/* Now marker. */}
