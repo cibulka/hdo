@@ -55,8 +55,5 @@
     "tou-a": "a meter with a time switch (A)",
     "tou-t": "a meter with a time switch (T)",
     "amm": "a smart meter"
-  },
-  "placeholder": {
-    "alphabet": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
   }
 }

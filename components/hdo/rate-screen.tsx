@@ -13,7 +13,6 @@ import { cn } from "@/lib/utils";
 import { Countdown } from "./countdown";
 import { LanguageSwitch } from "./language-switch";
 import { RateBackground } from "./rate-background";
-import { Scramble } from "./scramble";
 import { SelectionSentence } from "./selection-sentence";
 
 export const SELECTION_KEY = "hdo.selection.v1";
@@ -108,15 +107,14 @@ function Status({ state, now }: { state: RateState | null; now: number | null })
       <p className={cn("text-sm font-medium uppercase tracking-[0.3em]", "opacity-80")}>{t("status.now")}</p>
       <h1
         // Font size scales with the word length so long words (ВЫСОКИЙ) fit narrow screens; short ones (LOW) are capped.
-        // The placeholder's fixed 0.9em letter cells are wider than real letters (~0.75em), so it counts 1.2× more.
-        style={{ "--chars": rate ? t(`rate.${rate}`).length : t("rate.low").length * 1.2 } as React.CSSProperties}
+        style={{ "--chars": t(`rate.${rate ?? "low"}`).length } as React.CSSProperties}
         className={cn(
           "text-[min(10rem,calc((100vw-2rem)/(max(var(--chars),5)*0.75)))] leading-none font-black tracking-tight",
           "drop-shadow-[0_4px_24px_rgb(0_0_0/0.25)]",
           !rate && "opacity-35",
         )}
       >
-        {rate ? t(`rate.${rate}`) : <Scramble alphabet={t("placeholder.alphabet")} length={t("rate.low").length} />}
+        {rate ? t(`rate.${rate}`) : "?".repeat(t("rate.low").length)}
       </h1>
       <p className={cn("mt-4 text-sm uppercase tracking-[0.2em]", "opacity-80")}>{t("status.remaining")}</p>
       {until !== null && now !== null ? (
