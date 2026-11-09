@@ -53,7 +53,8 @@ function Timeline({ segments, from, now }: { segments: Segment[]; from: number; 
   return (
     <div className={cn("flex flex-col gap-6")}>
       <div>
-        <div className={cn("relative h-10 overflow-hidden", "rounded-lg")}>
+        {/* Border drawn outside the bar: an inset one darkens the green edge but not the red, so red looks taller. */}
+        <div className={cn("relative h-10 overflow-hidden", "rounded-lg outline-1 outline-offset-1 outline-black/20 dark:outline-white/25")}>
           {segments.map((s) => (
             <div
               key={s.start}
@@ -65,7 +66,6 @@ function Timeline({ segments, from, now }: { segments: Segment[]; from: number; 
           <div className={cn("absolute inset-y-0 left-0", "bg-background/55")} style={{ width: position(now) }} />
           {/* Now marker. */}
           <div className={cn("absolute inset-y-0 w-0.5 -translate-x-1/2", "bg-foreground")} style={{ left: position(now) }} />
-          <div className={cn("pointer-events-none absolute inset-0", "rounded-lg ring-1 ring-black/15 ring-inset dark:ring-white/20")} />
         </div>
         <div className={cn("relative h-6", "text-xs text-muted-foreground tabular-nums")}>
           {ticks.map((tick, i) => (
