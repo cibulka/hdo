@@ -55,5 +55,14 @@
     "tou-a": "a meter with a time switch (A)",
     "tou-t": "a meter with a time switch (T)",
     "amm": "a smart meter"
+  },
+  "schedule": {
+    "button": "Show next 24 hours",
+    "title": "Next 24 hours",
+    "description": "When the low and high rates apply.",
+    "low": "low",
+    "high": "high",
+    "now": "now",
+    "close": "Close"
   }
 }

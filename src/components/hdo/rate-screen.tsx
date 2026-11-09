@@ -6,13 +6,14 @@ import { useNow } from "@/hooks/use-now";
 import { DATA, DISTRIBUTORS } from "@/lib/hdo/data";
 import { completeSelection, type DraftSelection } from "@/lib/hdo/options";
 import { isoDate, pragueDate } from "@/lib/hdo/prague";
-import { getRateState, isStale, periodFor, type RateState } from "@/lib/hdo/schedule";
+import { getRateState, isStale, periodFor, type RateState, type Selection } from "@/lib/hdo/schedule";
 import type { DistributorData } from "@/lib/hdo/schema";
 import type { Locale } from "@/lib/i18n/locales";
 import { cn } from "@/lib/utils";
 import { Countdown } from "./countdown";
 import { LanguageSwitch } from "./language-switch";
 import { RateBackground } from "./rate-background";
+import { ScheduleDrawer } from "./schedule-drawer";
 import { SelectionSentence } from "./selection-sentence";
 
 export const SELECTION_KEY = "hdo.selection.v1";
@@ -60,7 +61,7 @@ export function RateScreen({ onLocaleChange }: { onLocaleChange: (locale: Locale
         </div>
 
         <section className={cn("relative flex flex-col items-center justify-center", "pb-8", "text-center")}>
-          <Status state={state} now={now} />
+          <Status state={state} now={now} data={data} selection={selection} />
         </section>
 
         <footer className={cn("absolute inset-x-0 bottom-0 flex flex-col items-center gap-3")}>
@@ -73,7 +74,17 @@ export function RateScreen({ onLocaleChange }: { onLocaleChange: (locale: Locale
 }
 
 /** The rate, or the same layout with placeholders while nothing is selected (no layout shift). */
-function Status({ state, now }: { state: RateState | null; now: number | null }) {
+function Status({
+  state,
+  now,
+  data,
+  selection,
+}: {
+  state: RateState | null;
+  now: number | null;
+  data: DistributorData;
+  selection: Selection | null;
+}) {
   const t = useTranslations();
   const format = useFormatter();
 
@@ -127,6 +138,14 @@ function Status({ state, now }: { state: RateState | null; now: number | null })
         </span>
       )}
       <p className={cn("mt-1 text-base", "opacity-85")}>{untilText}</p>
+      {state && selection && now !== null ? (
+        <ScheduleDrawer data={data} selection={selection} now={now} />
+      ) : (
+        // Same height as the button, so choosing a program doesn't shift the layout.
+        <span aria-hidden className={cn("invisible mt-3", "text-sm")}>
+          {t("schedule.button")}
+        </span>
+      )}
     </div>
   );
 }

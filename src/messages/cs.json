@@ -55,5 +55,14 @@
     "tou-a": "elektroměr se spínacími hodinami (A)",
     "tou-t": "elektroměr se spínacími hodinami (T)",
     "amm": "chytrý elektroměr"
+  },
+  "schedule": {
+    "button": "Zobrazit příštích 24 hodin",
+    "title": "Příštích 24 hodin",
+    "description": "Kdy platí nízký a kdy vysoký tarif.",
+    "low": "nízký",
+    "high": "vysoký",
+    "now": "teď",
+    "close": "Zavřít"
   }
 }
