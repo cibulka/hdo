@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Private notes (personal data, e.g. emails to the distributor) – never committed
+/docs/private/

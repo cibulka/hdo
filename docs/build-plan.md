@@ -261,7 +261,7 @@ Each phase ends with a check-in before moving on.
 
 ## Still open
 
-- First real test case: PRE, D57d, **AMM smart meter**. Program unknown: 573 (AMM `1052`) or 605 (AMM `1053`). The user will ask PRE.
+- First real test case: PRE, D57d, **AMM smart meter**, program **605** (AMM `1053`) – confirmed by the heater switching on at 21:00 (573 would be 21:15).
 
 
 ## Appendix – NT programs per tariff (PRE, current program)

@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
-import { THEME_COLORS } from "@/components/hdo/rate-background";
+import { THEME_COLORS } from "@/lib/theme";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 
@@ -12,7 +12,7 @@ const geist = Geist({
 export const metadata: Metadata = {
   title: "Nízký tarif",
   description: "Je teď nízký tarif? Kolik zbývá? Podle rozvrhu HDO distributora.",
-  appleWebApp: { title: "Nízký tarif", statusBarStyle: "black-translucent" },
+  appleWebApp: { capable: true, title: "Nízký tarif", statusBarStyle: "black-translucent" },
 };
 
 export const viewport: Viewport = {
