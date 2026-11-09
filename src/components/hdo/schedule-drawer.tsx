@@ -55,12 +55,10 @@ function Timeline({ segments, from, now }: { segments: Segment[]; from: number; 
       <div>
         {/* Border drawn outside the bar (no gap): an inset one darkens the green edge but not the red, so red looks taller. */}
         <div className={cn("relative h-10 overflow-hidden", "rounded-lg outline-1 outline-black/20 dark:outline-white/25")}>
-          {segments.map((s, i) => (
+          {segments.map((s) => (
             <div
               key={s.start}
-              // A thin neutral line between colours: saturated red next to green looks vertically
-              // shifted (chromostereopsis) even when the pixels are aligned.
-              className={cn("absolute inset-y-0", RATE_BG[s.rate], i > 0 && "border-l-2 border-popover")}
+              className={cn("absolute inset-y-0", RATE_BG[s.rate])}
               style={{ left: position(s.start), width: position(from + (s.end - s.start)) }}
             />
           ))}
