@@ -96,12 +96,18 @@ export function TokenCombobox({
                     className={cn("items-start", "gap-2")}
                   >
                     <CheckIcon className={cn("mt-0.5 shrink-0", item.value === value ? "opacity-100" : "opacity-0")} />
-                    <span className={cn("flex", item.inlineNote ? "flex-row items-baseline gap-2" : "flex-col")}>
+                    <span className={cn("flex", item.inlineNote ? "flex-row items-baseline gap-1.5" : "flex-col")}>
                       <span className={cn("font-medium")}>{item.label}</span>
-                      {(item.note ?? item.description) && (
-                        <span className={cn("text-xs", item.warning ? "text-destructive" : "text-muted-foreground")}>
-                          {item.note ?? item.description}
+                      {item.inlineNote && item.note ? (
+                        <span className={cn("text-muted-foreground")}>
+                          · <span className={cn("italic")}>{item.note}</span>
                         </span>
+                      ) : (
+                        (item.note ?? item.description) && (
+                          <span className={cn("text-xs", item.warning ? "text-destructive" : "text-muted-foreground")}>
+                            {item.note ?? item.description}
+                          </span>
+                        )
                       )}
                     </span>
                   </CommandItem>
