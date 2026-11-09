@@ -1,4 +1,4 @@
-import type { DeviceType, Week } from "../../../lib/hdo/schema.ts";
+import type { DeviceType, Week } from "#/lib/hdo/schema.ts";
 
 /** One device variant of one program, before grouping into tariffs/programs. */
 export interface RawVariant {

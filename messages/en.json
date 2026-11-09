@@ -1,0 +1,42 @@
+{
+  "rate": {
+    "low": "LOW",
+    "high": "HIGH"
+  },
+  "status": {
+    "now": "right now",
+    "remaining": "remaining",
+    "until": "until {time}",
+    "untilDay": "until {day} {time}",
+    "noChange": "no change in the coming days",
+    "days": "{count} d"
+  },
+  "selection": {
+    "sentence": "Distributor <distributor></distributor>, tariff <tariff></tariff>, program <program></program>",
+    "chooseTariff": "choose",
+    "chooseProgram": "choose",
+    "search": "Search…",
+    "empty": "Nothing found",
+    "unsupported": "not supported yet",
+    "program": "Program {command}",
+    "hours": "{hours} h a day",
+    "hint": "Your tariff is on your contract or invoice; the program is on the HDO receiver label or available from your distributor.",
+    "dataIssue": "unclear data"
+  },
+  "device": {
+    "hdo": "HDO receiver",
+    "tou-a": "Meter with time switch (A)",
+    "tou-t": "Meter with time switch (T)",
+    "amm": "Smart meter (AMM)"
+  },
+  "validity": {
+    "validUntil": "{distributor} schedule valid until {date}",
+    "stale": "The schedule expired on {date}. Times may have changed – please check with your distributor."
+  },
+  "issue": {
+    "title": "Ambiguous data",
+    "body": "The distributor's tables contain more than one schedule for this program, so we can't tell which one applies. Check with your distributor or choose another program."
+  },
+  "notFound": "The selected program is not in the current data. Please choose it again.",
+  "language": "Language"
+}

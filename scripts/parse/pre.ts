@@ -1,6 +1,6 @@
 // npm run parse-pre — reads every spreadsheet in input/pre/ and writes output/pre.json.
 import { basename, join, relative } from "node:path";
-import { DAY_KEYS, type DistributorData, type Period, type Program, type Tariff, type Variant } from "../../lib/hdo/schema.ts";
+import { DAY_KEYS, type DistributorData, type Period, type Program, type Tariff, type Variant } from "#/lib/hdo/schema.ts";
 import { isAmmTable, parseAmmTable } from "./pre/amm.ts";
 import { isHdoProgram, parseHdoProgram } from "./pre/hdo.ts";
 import { compareTariffs } from "./pre/tariffs.ts";

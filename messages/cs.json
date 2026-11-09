@@ -1,0 +1,42 @@
+{
+  "rate": {
+    "low": "NÍZKÝ",
+    "high": "VYSOKÝ"
+  },
+  "status": {
+    "now": "teď platí",
+    "remaining": "zbývá",
+    "until": "do {time}",
+    "untilDay": "do {day} {time}",
+    "noChange": "beze změny v příštích dnech",
+    "days": "{count} d"
+  },
+  "selection": {
+    "sentence": "Distribuce <distributor></distributor>, sazba <tariff></tariff>, program <program></program>",
+    "chooseTariff": "vyberte",
+    "chooseProgram": "vyberte",
+    "search": "Hledat…",
+    "empty": "Nic nenalezeno",
+    "unsupported": "zatím nepodporováno",
+    "program": "Program {command}",
+    "hours": "{hours} h denně",
+    "hint": "Sazbu najdete ve smlouvě nebo na faktuře, program na štítku HDO přijímače nebo u distributora.",
+    "dataIssue": "nejasná data"
+  },
+  "device": {
+    "hdo": "HDO přijímač",
+    "tou-a": "Elektroměr se spínacími hodinami (A)",
+    "tou-t": "Elektroměr se spínacími hodinami (T)",
+    "amm": "Chytrý elektroměr (AMM)"
+  },
+  "validity": {
+    "validUntil": "Rozvrh {distributor} platí do {date}",
+    "stale": "Platnost rozvrhu skončila {date}. Časy se mohly změnit – ověřte je u distributora."
+  },
+  "issue": {
+    "title": "Nejednoznačná data",
+    "body": "Pro tento program má distributor v tabulkách víc různých rozvrhů, takže nevíme, který platí. Ověřte ho u distributora, nebo vyberte jiný program."
+  },
+  "notFound": "Vybraný program v aktuálních datech není. Vyberte ho prosím znovu.",
+  "language": "Jazyk"
+}

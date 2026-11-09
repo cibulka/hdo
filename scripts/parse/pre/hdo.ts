@@ -1,4 +1,4 @@
-import { DAY_KEYS, type Week } from "../../../lib/hdo/schema.ts";
+import { DAY_KEYS, type Week } from "#/lib/hdo/schema.ts";
 import { ParseError, withContext } from "../shared/errors.ts";
 import { cellToMinutes, eventsToWindows, excelSerialToIso, type SwitchEvent } from "../shared/time.ts";
 import { text, type Row, type Workbook } from "../shared/xlsx.ts";

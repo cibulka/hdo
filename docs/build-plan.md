@@ -1,6 +1,6 @@
 # HDO – build plan
 
-> Status: **approved 2026-11-09**. Phases 1–3 done. Next: phase 4 (core UI).
+> Status: **approved 2026-11-09**. Phases 1–4 done. Next: phase 5 (transitions).
 
 ## Goal
 

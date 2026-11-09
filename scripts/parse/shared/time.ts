@@ -1,4 +1,4 @@
-import type { Window } from "../../../lib/hdo/schema.ts";
+import type { Window } from "#/lib/hdo/schema.ts";
 import { ParseError } from "./errors.ts";
 
 const DAY_MINUTES = 1440;
@@ -79,9 +79,7 @@ export function mergeWindows(windows: Window[]): Window[] {
   return out;
 }
 
-export function totalMinutes(windows: Window[]): number {
-  return windows.reduce((sum, [start, end]) => sum + end - start, 0);
-}
+export { totalMinutes } from "#/lib/hdo/minutes.ts";
 
 function describe(events: SwitchEvent[]): string {
   return events

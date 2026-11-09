@@ -1,6 +1,6 @@
 import { mkdirSync, renameSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { DAY_KEYS, type DistributorData, type Variant } from "../../../lib/hdo/schema.ts";
+import { DAY_KEYS, type DistributorData, type Variant } from "#/lib/hdo/schema.ts";
 import { ParseError } from "./errors.ts";
 
 export const ROOT = join(import.meta.dirname, "../../..");
