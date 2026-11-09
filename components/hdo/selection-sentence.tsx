@@ -2,9 +2,17 @@
 
 import { useTranslations } from "next-intl";
 import { DISTRIBUTORS } from "@/lib/hdo/data";
-import { draftForTariff, programGroups, type DraftSelection } from "@/lib/hdo/options";
+import {
+  deviceOptions,
+  draftForDevice,
+  draftForProgram,
+  draftForTariff,
+  programOptions,
+  type DraftSelection,
+} from "@/lib/hdo/options";
 import type { Period } from "@/lib/hdo/schema";
 import { cn } from "@/lib/utils";
+import { HintPopover } from "./hint-popover";
 import { TokenCombobox, type TokenGroup } from "./token-combobox";
 
 interface SelectionSentenceProps {
@@ -14,10 +22,16 @@ interface SelectionSentenceProps {
   className?: string;
 }
 
-/** "Distribuce PRE, sazba D57d, program D57 573 574 575" – every value is a combobox. */
+/**
+ * "Jsem v síti PRE se sazbou D57d. Mám program 573 a chytrý elektroměr."
+ * Every value is a combobox; a value with only one possible option is plain text.
+ */
 export function SelectionSentence({ period, draft, onChange, className }: SelectionSentenceProps) {
   const t = useTranslations("selection");
   const tDevice = useTranslations("device");
+  const tDeviceSentence = useTranslations("deviceSentence");
+  const hours = (values: number[]) => t("hours", { hours: values.map(formatHours).join("/") });
+  const common = { searchPlaceholder: t("search"), emptyText: t("empty") };
 
   const distributorGroups: TokenGroup[] = [
     {
@@ -32,72 +46,90 @@ export function SelectionSentence({ period, draft, onChange, className }: Select
 
   const tariffGroups: TokenGroup[] = [{ items: period.tariffs.map((tariff) => ({ value: tariff.code, label: tariff.code })) }];
 
-  const groups = draft.tariff ? programGroups(period, draft.tariff) : [];
-  const options = groups.flatMap((g) => g.options);
-  const programTokenGroups: TokenGroup[] = groups.map((group) => ({
-    heading: t("program", { command: group.command }),
-    description: group.label ?? undefined,
-    items: group.options.map((option) => ({
-      value: option.key,
-      label: option.display,
-      description: [
-        tDevice(option.device),
-        option.display.startsWith(option.id) ? null : `ID ${option.id}`,
-        t("hours", { hours: option.hours.map(formatHours).join("/") }),
-      ]
-        .filter(Boolean)
-        .join(" · "),
-      keywords: [option.id, option.command],
-      note: option.hasIssues ? `${tDevice(option.device)} · ID ${option.id} · ${t("dataIssue")}` : undefined,
-      warning: option.hasIssues,
-    })),
-  }));
+  const programs = draft.tariff ? programOptions(period, draft.tariff) : [];
+  const programGroups: TokenGroup[] = [
+    {
+      items: programs.map((program) => ({
+        value: program.command,
+        label: t("program", { command: program.command }),
+        description: [hours(program.hours), program.address].filter(Boolean).join(" · "),
+        keywords: program.aliases,
+      })),
+    },
+  ];
 
-  const selectedKey = draft.command && draft.device && draft.variantId ? `${draft.command}|${draft.device}|${draft.variantId}` : undefined;
-  const selectedOption = options.find((o) => o.key === selectedKey);
+  const devices = draft.tariff && draft.command ? deviceOptions(period, draft.tariff, draft.command) : [];
+  const selectedDeviceKey = draft.device && draft.variantId ? `${draft.device}|${draft.variantId}` : undefined;
+  const selectedDevice = devices.find((d) => d.key === selectedDeviceKey);
+  const deviceGroups: TokenGroup[] = [
+    {
+      items: devices.map((option) => ({
+        value: option.key,
+        label: option.ambiguous ? `${tDevice(option.device)} · ID ${option.id}` : tDevice(option.device),
+        description: `${t("devicePrinted", { printed: option.printed })} · ${hours(option.hours)}`,
+        keywords: [option.id, option.printed],
+        note: option.hasIssues ? `${t("devicePrinted", { printed: option.printed })} · ${t("dataIssue")}` : undefined,
+        warning: option.hasIssues,
+      })),
+    },
+  ];
+
   const distributorName = DISTRIBUTORS.find((d) => d.id === draft.distributor)?.name ?? draft.distributor;
 
   return (
-    <p className={cn("text-lg leading-relaxed sm:text-xl", "text-white/85", className)}>
+    <p className={cn("text-xl leading-relaxed text-balance sm:text-2xl", "text-white/85", className)}>
       {t.rich("sentence", {
         distributor: () => (
           <TokenCombobox
+            {...common}
             text={distributorName}
             value={draft.distributor}
             groups={distributorGroups}
             onSelect={() => undefined}
             searchable={false}
-            searchPlaceholder={t("search")}
-            emptyText={t("empty")}
           />
         ),
         tariff: () => (
           <TokenCombobox
-            text={draft.tariff ?? t("chooseTariff")}
+            {...common}
+            text={draft.tariff ?? t("choose")}
             isPlaceholder={!draft.tariff}
             value={draft.tariff}
             groups={tariffGroups}
-            onSelect={(tariff) => onChange(draftForTariff(period, draft.distributor, tariff))}
-            searchPlaceholder={t("search")}
-            emptyText={t("empty")}
+            onSelect={(tariff) => onChange(draftForTariff(period, draft, tariff))}
           />
         ),
         program: () => (
           <TokenCombobox
-            text={selectedOption?.display ?? t("chooseProgram")}
-            isPlaceholder={!selectedOption}
-            interactive={!!draft.tariff && options.length > 1}
-            value={selectedKey}
-            groups={programTokenGroups}
+            {...common}
+            text={draft.command ?? t("choose")}
+            isPlaceholder={!draft.command}
+            interactive={programs.length > 1}
+            value={draft.command}
+            groups={programGroups}
+            onSelect={(command) => onChange(draftForProgram(period, draft, command))}
+            searchable={programs.length > 6}
+          />
+        ),
+        device: () => (
+          <TokenCombobox
+            {...common}
+            text={selectedDevice ? tDeviceSentence(selectedDevice.device) : t("choose")}
+            isPlaceholder={!selectedDevice}
+            interactive={devices.length > 1}
+            value={selectedDeviceKey}
+            groups={deviceGroups}
             onSelect={(key) => {
-              const option = options.find((o) => o.key === key);
-              if (option) onChange({ ...draft, command: option.command, device: option.device, variantId: option.id });
+              const option = devices.find((d) => d.key === key);
+              if (option) onChange(draftForDevice(draft, option));
             }}
-            searchPlaceholder={t("search")}
-            emptyText={t("empty")}
+            searchable={false}
           />
         ),
       })}
+      <HintPopover label={t("hintLabel")} className={cn("ml-1.5 align-middle")}>
+        {t("hint")}
+      </HintPopover>
     </p>
   );
 }

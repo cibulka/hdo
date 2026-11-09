@@ -12,16 +12,17 @@
     "days": "{count} d"
   },
   "selection": {
-    "sentence": "Distributor <distributor></distributor>, tariff <tariff></tariff>, program <program></program>",
-    "chooseTariff": "choose",
-    "chooseProgram": "choose",
+    "sentence": "I’m on the <distributor></distributor> grid with tariff <tariff></tariff>. I have program <program></program> and <device></device>.",
     "search": "Search…",
     "empty": "Nothing found",
     "unsupported": "not supported yet",
     "program": "Program {command}",
     "hours": "{hours} h a day",
-    "hint": "Your tariff is on your contract or invoice; the program is on the HDO receiver label or available from your distributor.",
-    "dataIssue": "unclear data"
+    "hint": "Your tariff is on your contract or invoice. The program is on the HDO receiver label; for a meter without a receiver, ask your distributor.",
+    "dataIssue": "unclear data",
+    "choose": "choose",
+    "hintLabel": "Where do I find this?",
+    "devicePrinted": "printed as: {printed}"
   },
   "device": {
     "hdo": "HDO receiver",
@@ -38,5 +39,11 @@
     "body": "The distributor's tables contain more than one schedule for this program, so we can't tell which one applies. Check with your distributor or choose another program."
   },
   "notFound": "The selected program is not in the current data. Please choose it again.",
-  "language": "Language"
+  "language": "Language",
+  "deviceSentence": {
+    "hdo": "an HDO receiver",
+    "tou-a": "a meter with a time switch (A)",
+    "tou-t": "a meter with a time switch (T)",
+    "amm": "a smart meter"
+  }
 }

@@ -12,16 +12,17 @@
     "days": "{count} d"
   },
   "selection": {
-    "sentence": "Distribuce <distributor></distributor>, sazba <tariff></tariff>, program <program></program>",
-    "chooseTariff": "vyberte",
-    "chooseProgram": "vyberte",
+    "sentence": "Jsem v síti <distributor></distributor> se sazbou <tariff></tariff>. Mám program <program></program> a <device></device>.",
     "search": "Hledat…",
     "empty": "Nic nenalezeno",
     "unsupported": "zatím nepodporováno",
     "program": "Program {command}",
     "hours": "{hours} h denně",
-    "hint": "Sazbu najdete ve smlouvě nebo na faktuře, program na štítku HDO přijímače nebo u distributora.",
-    "dataIssue": "nejasná data"
+    "hint": "Sazbu najdete ve smlouvě nebo na faktuře. Program je na štítku HDO přijímače; u elektroměru bez přijímače ho zjistíte u distributora.",
+    "dataIssue": "nejasná data",
+    "choose": "vyberte",
+    "hintLabel": "Kde to najdu?",
+    "devicePrinted": "na zařízení: {printed}"
   },
   "device": {
     "hdo": "HDO přijímač",
@@ -38,5 +39,11 @@
     "body": "Pro tento program má distributor v tabulkách víc různých rozvrhů, takže nevíme, který platí. Ověřte ho u distributora, nebo vyberte jiný program."
   },
   "notFound": "Vybraný program v aktuálních datech není. Vyberte ho prosím znovu.",
-  "language": "Jazyk"
+  "language": "Jazyk",
+  "deviceSentence": {
+    "hdo": "HDO přijímač",
+    "tou-a": "elektroměr se spínacími hodinami (A)",
+    "tou-t": "elektroměr se spínacími hodinami (T)",
+    "amm": "chytrý elektroměr"
+  }
 }
