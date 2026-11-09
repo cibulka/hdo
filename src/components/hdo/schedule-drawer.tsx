@@ -53,12 +53,14 @@ function Timeline({ segments, from, now }: { segments: Segment[]; from: number; 
   return (
     <div className={cn("flex flex-col gap-6")}>
       <div>
-        {/* Border drawn outside the bar: an inset one darkens the green edge but not the red, so red looks taller. */}
-        <div className={cn("relative h-10 overflow-hidden", "rounded-lg outline-1 outline-offset-1 outline-black/20 dark:outline-white/25")}>
-          {segments.map((s) => (
+        {/* Border drawn outside the bar (no gap): an inset one darkens the green edge but not the red, so red looks taller. */}
+        <div className={cn("relative h-10 overflow-hidden", "rounded-lg outline-1 outline-black/20 dark:outline-white/25")}>
+          {segments.map((s, i) => (
             <div
               key={s.start}
-              className={cn("absolute inset-y-0", RATE_BG[s.rate])}
+              // A thin neutral line between colours: saturated red next to green looks vertically
+              // shifted (chromostereopsis) even when the pixels are aligned.
+              className={cn("absolute inset-y-0", RATE_BG[s.rate], i > 0 && "border-l-2 border-popover")}
               style={{ left: position(s.start), width: position(from + (s.end - s.start)) }}
             />
           ))}
